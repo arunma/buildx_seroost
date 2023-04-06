@@ -1,0 +1,116 @@
+body {
+	background: #202021;
+	color: #ddd;
+}
+
+a {
+	color: #b6c1ce;
+}
+
+a:visited {
+	color: #5B7EA6;
+}
+
+a:hover {
+	color: #5B93D0;
+}
+
+.logo-bg, .header-bg {
+	background: rgba(40,42,46,1);
+	background: -moz-linear-gradient(-45deg, rgba(40,42,46,1) 0%, rgba(55,59,65,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(40,42,46,1)), color-stop(100%, rgba(55,59,65,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(40,42,46,1) 0%, rgba(55,59,65,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(40,42,46,1) 0%, rgba(55,59,65,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(40,42,46,1) 0%, rgba(55,59,65,1) 100%);
+	background: linear-gradient(135deg, rgba(40,42,46,1) 0%, rgba(55,59,65,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282a2e', endColorstr='#373b41', GradientType=1 );
+}
+
+.logo, .header-logo {
+	color: #C8C4BE;
+}
+
+.logo-desc {
+	color: #707880;
+}
+
+.result-headers span {
+	color: #bababa;
+}
+
+.indexcommand {
+	background-color: #34373D;
+	color: #aaa;
+}
+
+.function {
+	color: #ccc;
+	background-color: #252525;
+}
+
+.constant {
+	color: #dad;
+}
+
+.disabled, .disabled a, a.disabled {
+	color: #666;
+}
+
+.example .programlisting {
+	background-color: #151515;
+}
+
+.ckeyword {
+	color: #52a471;
+}
+
+.codestring {
+	color: #dd1144;
+}
+
+.codecomment, .codecomment .ckeyword, .codecomment .codestring, .codecomment .constant {
+	color: #999999;
+}
+
+#improvepage {
+	border-top: 1px solid white;
+}
+
+#Copyright {
+	background-color: #393939;
+	border: 1px solid white;
+}
+
+#footer {
+	border-top: 1px solid gray;
+	background-color: #333;
+}
+
+.ui-menu-item {
+	color: #ddd;
+	background-color: #282a2e;
+}
+
+.ui-selectmenu-open ul .ui-state-focus, .ui-state-default {
+	color: #fff;
+	background-color: #34373D;
+}
+
+.ui-autocomplete .ui-state-focus, .ui-state-default {
+	color: #fff;
+	background-color: #34373D;
+}
+
+#frontsearch, #search {
+	border: 1px solid #555;
+	background-color: #41444A;
+	color: #cecece;
+}
+
+#frontsearch:focus, #search:focus {
+	border: 1px solid #787878;
+}
+
+#outer_disqus_thread {
+	background-color: #34373D;
+}

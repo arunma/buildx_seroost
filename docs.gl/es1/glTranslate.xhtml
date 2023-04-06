@@ -1,0 +1,73 @@
+<div class="refentry" title="glTranslate"><a id="glTranslate"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glTranslate — multiply the current matrix by a translation matrix</p></div><div class="refsynopsisdiv" title="C Specification"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glTranslatef</b>(</code></td><td>GLfloat <var class="pdparam">x</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">y</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">z</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glTranslatex</b>(</code></td><td>GLfixed <var class="pdparam">x</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">y</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">z</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1" title="Parameters"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term">
+		<em class="parameter"><code>x</code></em>,
+		<em class="parameter"><code>y</code></em>,
+		<em class="parameter"><code>z</code></em>
+		</span></dt><dd><p>Specify the
+		    <em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em>, and
+		    <em class="parameter"><code>z</code></em> coordinates of a translation vector.</p></dd></dl></div></div><div class="refsect1" title="Description"><a id="description"></a><h2>Description</h2><p><code class="function">glTranslate</code> produces a translation by
+	<math overflow="scroll">
+	    <mfenced><mi>x</mi><mi>y</mi><mi>z</mi></mfenced>
+	</math>.
+	The current matrix (see
+	<a class="citerefentry" href="glMatrixMode"><span class="citerefentry"><span class="refentrytitle">glMatrixMode</span></span></a>)
+	is multiplied by this translation matrix, with the product
+	replacing the current matrix, as if
+	<a class="citerefentry" href="glMultMatrix"><span class="citerefentry"><span class="refentrytitle">glMultMatrix</span></span></a>
+	were called with the following matrix for its argument:</p><div class="informalequation"><math overflow="scroll">
+	    <mrow>
+		<mo>(</mo>
+		<mtable class="matrix">
+		    <mtr>
+			<mtd><mn>1</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mi>x</mi></mtd>
+		    </mtr>
+		    <mtr>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>1</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mi>y</mi></mtd>
+		    </mtr>
+		    <mtr>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>1</mn></mtd>
+			<mtd><mi>z</mi></mtd>
+		    </mtr>
+		    <mtr>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>1</mn></mtd>
+		    </mtr>
+		</mtable>
+		<mo>)</mo>
+	    </mrow>
+	</math></div><p>If the matrix mode is either
+	<code class="constant">GL_MODELVIEW</code> or
+	<code class="constant">GL_PROJECTION</code>, all objects drawn after a call to
+	<code class="function">glTranslate</code> are translated.</p><p>Use
+	<a class="citerefentry" href="glPushMatrix"><span class="citerefentry"><span class="refentrytitle">glPushMatrix</span></span></a>
+	and
+	<a class="citerefentry" href="glPopMatrix"><span class="citerefentry"><span class="refentrytitle">glPopMatrix</span></span></a>
+	to save and restore the untranslated coordinate system.</p></div><div class="refsect1" title="Associated Gets"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MATRIX_MODE</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MODELVIEW_MATRIX</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_PROJECTION_MATRIX</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_TEXTURE_MATRIX</code>
+        </p></div><div class="refsect1" title="See Also"><a id="seealso"></a><h2>See Also</h2><p>
+	<a class="citerefentry" href="glMatrixMode"><span class="citerefentry"><span class="refentrytitle">glMatrixMode</span></span></a>,
+	<a class="citerefentry" href="glMultMatrix"><span class="citerefentry"><span class="refentrytitle">glMultMatrix</span></span></a>,
+	<a class="citerefentry" href="glPushMatrix"><span class="citerefentry"><span class="refentrytitle">glPushMatrix</span></span></a>,
+	<a class="citerefentry" href="glRotate"><span class="citerefentry"><span class="refentrytitle">glRotate</span></span></a>,
+	<a class="citerefentry" href="glScale"><span class="citerefentry"><span class="refentrytitle">glScale</span></span></a>
+	</p></div><div class="refsect1" title="Copyright"><a id="copyright"></a><h2>Copyright</h2><p>
+	    Copyright © 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div>

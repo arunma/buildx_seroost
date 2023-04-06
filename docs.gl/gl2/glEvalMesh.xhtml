@@ -1,0 +1,513 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glEvalMesh"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glEvalMesh — compute a one- or two-dimensional grid of points or lines</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glEvalMesh1</b>(</code></td><td>GLenum  </td><td><var class="pdparam">mode</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">i1</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">i2</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>mode</code></em></span></dt><dd><p>
+                    In <code class="function">glEvalMesh1</code>, specifies whether to compute a one-dimensional mesh of points or lines.
+                    Symbolic constants
+                    <code class="constant">GL_POINT</code> and
+                    <code class="constant">GL_LINE</code> are accepted.
+                </p></dd><dt><span class="term"><em class="parameter"><code>i1</code></em>, </span><span class="term"><em class="parameter"><code>i2</code></em></span></dt><dd><p>
+                    Specify the first and last integer values for grid domain variable
+                    <math overflow="scroll"><mi mathvariant="italic">i</mi></math>.
+                </p></dd></dl></div></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glEvalMesh2</b>(</code></td><td>GLenum  </td><td><var class="pdparam">mode</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">i1</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">i2</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">j1</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">j2</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters2"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>mode</code></em></span></dt><dd><p>
+                    In <code class="function">glEvalMesh2</code>, specifies whether to compute a two-dimensional mesh of points, lines,
+                    or polygons.
+                    Symbolic constants
+                    <code class="constant">GL_POINT</code>,
+                    <code class="constant">GL_LINE</code>, and
+                    <code class="constant">GL_FILL</code> are accepted.
+                </p></dd><dt><span class="term"><em class="parameter"><code>i1</code></em>, </span><span class="term"><em class="parameter"><code>i2</code></em></span></dt><dd><p>
+                    Specify the first and last integer values for grid domain variable
+                    <math overflow="scroll"><mi mathvariant="italic">i</mi></math>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>j1</code></em>, </span><span class="term"><em class="parameter"><code>j2</code></em></span></dt><dd><p>
+                    Specify the first and last integer values for grid domain variable
+                    <math overflow="scroll"><mi mathvariant="italic">j</mi></math>.
+                </p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+            <a class="citerefentry" href="glMapGrid"><span class="citerefentry"><span class="refentrytitle">glMapGrid</span></span></a> and <code class="function">glEvalMesh</code> are used in tandem to efficiently
+            generate and evaluate a series of evenly-spaced map domain values.
+            <code class="function">glEvalMesh</code> steps through the integer domain of a one- or two-dimensional grid,
+            whose range is the domain of the evaluation maps specified by
+            <a class="citerefentry" href="glMap1"><span class="citerefentry"><span class="refentrytitle">glMap1</span></span></a> and <a class="citerefentry" href="glMap2"><span class="citerefentry"><span class="refentrytitle">glMap2</span></span></a>.
+            <em class="parameter"><code>mode</code></em> determines whether the resulting vertices are connected as
+            points,
+            lines,
+            or filled polygons.
+        </p><p>
+            In the one-dimensional case,
+            <code class="function">glEvalMesh1</code>,
+            the mesh is generated as if the following code fragment were executed:
+        </p><p>
+            </p><pre class="programlisting">
+glBegin( <em class="parameter"><code>type</code></em> );
+for ( i = <em class="parameter"><code>i1</code></em>; i &lt;= <em class="parameter"><code>i2</code></em>; i += 1 )
+   glEvalCoord1( <math overflow="scroll">
+
+		      <mrow>
+		          <mrow>
+		              <mn>i</mn>
+			      <mo>·</mo>
+			      <mo>Δ</mo>
+		              <mi mathvariant="italic">u</mi>
+		          </mrow>
+		          <mo>+</mo>
+		          <msub>
+		              <mi mathvariant="italic">u</mi>
+		              <mn>1</mn>
+		          </msub>
+		      </mrow>
+		  </math> );
+glEnd();
+            </pre><p>
+            where
+        </p><p>
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mo>Δ</mo>
+                        <mi mathvariant="italic">u</mi>
+                    </mrow>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mfenced open="(" close=")">
+                            <mrow>
+                                <msub>
+				    <mi mathvariant="italic">u</mi>
+                                    <mn>2</mn>
+                                </msub>
+                                <mo>-</mo>
+                                <msub>
+				    <mi mathvariant="italic">u</mi>
+                                    <mn>1</mn>
+                                </msub>
+                            </mrow>
+                        </mfenced>
+                        <mi mathvariant="italic">n</mi>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+        </p><p>
+            and
+            <math overflow="scroll"><mi mathvariant="italic">n</mi></math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>1</mn>
+                </msub>
+            </math>,
+            and
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>
+            are the arguments to the most recent
+            <a class="citerefentry" href="glMapGrid1"><span class="citerefentry"><span class="refentrytitle">glMapGrid1</span></span></a> command.
+            <span class="emphasis"><em>type</em></span> is <code class="constant">GL_POINTS</code> if <em class="parameter"><code>mode</code></em> is <code class="constant">GL_POINT</code>,
+            or <code class="constant">GL_LINES</code> if <em class="parameter"><code>mode</code></em> is <code class="constant">GL_LINE</code>.
+        </p><p>
+            The one absolute numeric requirement is that if
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">i</mi>
+                    <mo>=</mo>
+                    <mi mathvariant="italic">n</mi>
+                </mrow>
+            </math>,
+            then the
+            value computed from
+            <math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mi mathvariant="italic">i</mi>
+                        <mo>·</mo>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">u</mi>
+                        </mrow>
+                    </mrow>
+                    <mo>+</mo>
+                    <msub><mi mathvariant="italic">u</mi>
+                    <mn>1</mn>
+                    </msub>
+                </mrow>
+            </math>
+            is exactly
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>.
+        </p><p>
+            In the two-dimensional case, <code class="function">glEvalMesh2</code>, let
+            .cp
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mo>Δ</mo>
+                        <mi mathvariant="italic">u</mi>
+                    </mrow>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mfenced open="(" close=")">
+                            <mrow>
+                                <msub><mi mathvariant="italic">u</mi>
+                                <mn>2</mn>
+                                </msub>
+                                <mo>-</mo>
+                                <msub><mi mathvariant="italic">u</mi>
+                                <mn>1</mn>
+                                </msub>
+                            </mrow>
+                        </mfenced>
+                        <mi mathvariant="italic">n</mi>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+        </p><p>
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mo>Δ</mo>
+                        <mi mathvariant="italic">v</mi>
+                    </mrow>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mfenced open="(" close=")">
+                            <mrow>
+                                <msub><mi mathvariant="italic">v</mi>
+                                <mn>2</mn>
+                                </msub>
+                                <mo>-</mo>
+                                <msub><mi mathvariant="italic">v</mi>
+                                <mn>1</mn>
+                                </msub>
+                            </mrow>
+                        </mfenced>
+                        <mi mathvariant="italic">m</mi>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+        </p><p>
+            where
+            <math overflow="scroll"><mi mathvariant="italic">n</mi></math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>1</mn>
+                </msub>
+            </math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>,
+            <math overflow="scroll"><mi mathvariant="italic">m</mi></math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">v</mi>
+                <mn>1</mn>
+                </msub>
+            </math>,
+            and
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">v</mi>
+                <mn>2</mn>
+                </msub>
+            </math>
+            are the
+            arguments to the most recent <a class="citerefentry" href="glMapGrid2"><span class="citerefentry"><span class="refentrytitle">glMapGrid2</span></span></a> command.  Then, if
+            <em class="parameter"><code>mode</code></em> is <code class="constant">GL_FILL</code>, the <code class="function">glEvalMesh2</code> command is equivalent
+            to:
+        </p><p>
+            </p><pre class="programlisting">
+for ( j = <em class="parameter"><code>j1</code></em>; j &lt; <em class="parameter"><code>j2</code></em>; j += 1 ) {
+   glBegin( GL_QUAD_STRIP );
+   for ( i = <em class="parameter"><code>i1</code></em>; i &lt;= <em class="parameter"><code>i2</code></em>; i += 1 ) {
+      glEvalCoord2( <math overflow="scroll">
+
+		        <mrow>
+			    <mrow>
+			        <mn>i</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">u</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">u</mi>
+		                <mn>1</mn>
+		            </msub>
+			    <mo>,</mo>
+
+			    <mrow>
+			        <mn>j</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">v</mi>
+
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">v</mi>
+		                <mn>1</mn>
+		            </msub>
+			</mrow>
+		    </math> );
+      glEvalCoord2( <math overflow="scroll">
+
+		        <mrow>
+			    <mrow>
+			        <mn>i</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">u</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">u</mi>
+		                <mn>1</mn>
+		            </msub>
+			    <mo>,</mo>
+
+			    <mrow>
+			        <mrow>
+				    <mfenced open="(" close=")">
+				        <mrow>
+			                    <mn>j</mn>
+				            <mo>+</mo>
+			                    <mn>1</mn>
+				        </mrow>
+				    </mfenced>
+				</mrow>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">v</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">v</mi>
+		                <mn>1</mn>
+		            </msub>
+			</mrow>
+		    </math> );
+   }
+   glEnd();
+}
+            </pre><p>
+        </p><p>
+            If <em class="parameter"><code>mode</code></em> is <code class="constant">GL_LINE</code>, then a call to <code class="function">glEvalMesh2</code> is equivalent to:
+        </p><p>
+            </p><pre class="programlisting">
+for ( j = <em class="parameter"><code>j1</code></em>; j &lt;= <em class="parameter"><code>j2</code></em>; j += 1 ) {
+   glBegin( GL_LINE_STRIP );
+   for ( i = <em class="parameter"><code>i1</code></em>; i &lt;= <em class="parameter"><code>i2</code></em>; i += 1 )
+      glEvalCoord2( <math overflow="scroll">
+
+		        <mrow>
+			    <mrow>
+			        <mn>i</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">u</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">u</mi>
+		                <mn>1</mn>
+		            </msub>
+			    <mo>,</mo>
+
+			    <mrow>
+			        <mn>j</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">v</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">v</mi>
+		                <mn>1</mn>
+		            </msub>
+			</mrow>
+		    </math> );
+   glEnd();
+}
+
+for ( i = <em class="parameter"><code>i1</code></em>;  i &lt;= <em class="parameter"><code>i2</code></em>; i += 1 ) {
+   glBegin( GL_LINE_STRIP );
+   for ( j = <em class="parameter"><code>j1</code></em>; j &lt;= <em class="parameter"><code>j1</code></em>; j += 1 )
+      glEvalCoord2( <math overflow="scroll">
+
+		        <mrow>
+			    <mrow>
+			        <mn>i</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">u</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">u</mi>
+		                <mn>1</mn>
+		            </msub>
+			    <mo>,</mo>
+
+			    <mrow>
+			        <mn>j</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">v</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">v</mi>
+		                <mn>1</mn>
+		            </msub>
+			</mrow>
+		    </math> );
+   glEnd();
+}
+            </pre><p>
+        </p><p>
+            And finally, if <em class="parameter"><code>mode</code></em> is <code class="constant">GL_POINT</code>, then a call to
+            <code class="function">glEvalMesh2</code> is equivalent to:
+        </p><p>
+            </p><pre class="programlisting">
+glBegin( GL_POINTS );
+for ( j = <em class="parameter"><code>j1</code></em>; j &lt;= <em class="parameter"><code>j2</code></em>; j += 1 )
+   for ( i = <em class="parameter"><code>i1</code></em>; i &lt;= <em class="parameter"><code>i2</code></em>; i += 1 )
+      glEvalCoord2( <math overflow="scroll">
+
+		        <mrow>
+			    <mrow>
+			        <mn>i</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">u</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">u</mi>
+		                <mn>1</mn>
+		            </msub>
+			    <mo>,</mo>
+
+			    <mrow>
+			        <mn>j</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">v</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">v</mi>
+		                <mn>1</mn>
+		            </msub>
+			</mrow>
+		    </math> );
+glEnd();
+            </pre><p>
+        </p><p>
+            In all three cases, the only absolute numeric requirements are that if
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">i</mi>
+                    <mo>=</mo>
+                    <mi mathvariant="italic">n</mi>
+                </mrow>
+            </math>,
+            then the value computed from
+            <math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mi mathvariant="italic">i</mi>
+                        <mo>·</mo>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">u</mi>
+                        </mrow>
+                    </mrow>
+                    <mo>+</mo>
+                    <msub><mi mathvariant="italic">u</mi>
+                    <mn>1</mn>
+                    </msub>
+                </mrow>
+            </math>
+            is exactly
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>,
+            and if
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">j</mi>
+                    <mo>=</mo>
+                    <mi mathvariant="italic">m</mi>
+                </mrow>
+            </math>,
+            then the value computed from
+            <math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mi mathvariant="italic">j</mi>
+                        <mo>·</mo>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">v</mi>
+                        </mrow>
+                    </mrow>
+                    <mo>+</mo>
+                    <msub><mi mathvariant="italic">v</mi>
+                    <mn>1</mn>
+                    </msub>
+                </mrow>
+            </math>
+            is exactly
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">v</mi>
+                <mn>2</mn>
+                </msub>
+            </math>.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="errors"></a><h2>Errors</h2><p>
+            <code class="constant">GL_INVALID_ENUM</code> is generated if <em class="parameter"><code>mode</code></em> is not an accepted value.
+        </p><p>
+            <code class="constant">GL_INVALID_OPERATION</code> is generated if <code class="function">glEvalMesh</code>
+            is executed between the execution of <a class="citerefentry" href="glBegin"><span class="citerefentry"><span class="refentrytitle">glBegin</span></span></a>
+            and the corresponding execution of <a class="citerefentry" href="glEnd"><span class="citerefentry"><span class="refentrytitle">glEnd</span></span></a>.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP1_GRID_DOMAIN</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP2_GRID_DOMAIN</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP1_GRID_SEGMENTS</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP2_GRID_SEGMENTS</code>
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1" lang="en" xml:lang="en"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="glBegin"><span class="citerefentry"><span class="refentrytitle">glBegin</span></span></a>,
+            <a class="citerefentry" href="glEvalCoord"><span class="citerefentry"><span class="refentrytitle">glEvalCoord</span></span></a>,
+            <a class="citerefentry" href="glEvalPoint"><span class="citerefentry"><span class="refentrytitle">glEvalPoint</span></span></a>,
+            <a class="citerefentry" href="glMap1"><span class="citerefentry"><span class="refentrytitle">glMap1</span></span></a>,
+            <a class="citerefentry" href="glMap2"><span class="citerefentry"><span class="refentrytitle">glMap2</span></span></a>,
+            <a class="citerefentry" href="glMapGrid"><span class="citerefentry"><span class="refentrytitle">glMapGrid</span></span></a>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

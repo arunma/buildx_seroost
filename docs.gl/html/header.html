@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{$command} - {$api_name} {$command_major_version} - docs.gl</title>
+
+  <link rel="shortcut icon" href="/favicon.ico" />
+  {$jquery}
+  <link rel="stylesheet" href="../jquery-ui.css" />
+  {$jqueryui}
+  <script src="../jquery-bonsai/jquery.bonsai.js"></script>
+  <link href="../jquery-bonsai/jquery.bonsai.css" rel="stylesheet" type="text/css" />
+  <script src="../jquery-cookie/jquery.cookie.js"></script>
+
+  {$mathjax}
+
+  <link href="../style.css" rel="stylesheet" type="text/css" />
+  <link id="pagestyle" href="../style_light.css" rel="stylesheet" type="text/css" />
+
+  <script>
+    window.current_api = "{$current_api}";
+    window.base_directory = "../";
+  </script>
+  <script src="../docs.gl.search.js"></script>
+  <script src="../docs.gl.js"></script>
+
+</head>
+<body>
+  <div class='header-bg'>
+    <div class="toggle-container"><a href="#" id="style_light">Light</a> | <a href="#" id="style_dark">Dark</a></div>
+    <div class='header-container'>
+      <div class='header-inner'>
+        <a href="/"><h1 class="header-logo">docs.<span class="thicken">GL</span></h1></a>
+        <input id="search" placeholder="search" size="50" /><input id="search_button" type="submit" value="Go" />
+        <span style="clear:both;"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="everything">
+    <div id="toc">
+      <div id="versions_container">
+        <select id="versions_dropdown">{$versions_options}</select>
+      </div>
+
+      <input id="hide_deprecated" type="checkbox"> <label id="hide_label" for="hide_deprecated">Hide unavailable</label>
+
+      <ul id="command_categories">{$api_commands}</ul>
+      <ul id="glsl_command_categories">{$glsl_api_commands}</ul>
+
+    </div>
+
+    <div id="khronos">
+      <div id="command_versions">{$command_versions}</div>
+      <h1 id="command_title">{$command}</h1>

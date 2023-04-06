@@ -1,0 +1,28 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glXQueryExtension"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glXQueryExtension — indicate whether the GLX extension is supported</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">Bool <b class="fsfunc">glXQueryExtension</b>(</code></td><td>Display *  </td><td><var class="pdparam">dpy</var>, </td></tr><tr><td> </td><td>int *  </td><td><var class="pdparam">errorBase</var>, </td></tr><tr><td> </td><td>int *  </td><td><var class="pdparam">eventBase</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>dpy</code></em></span></dt><dd><p>
+                    Specifies the connection to the X server.
+                </p></dd><dt><span class="term"><em class="parameter"><code>errorBase</code></em></span></dt><dd><p>
+                    Returns the base error code of the GLX server extension.
+                </p></dd><dt><span class="term"><em class="parameter"><code>eventBase</code></em></span></dt><dd><p>
+                    Returns the base event code of the GLX server extension.
+                </p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+            <code class="function">glXQueryExtension</code> returns <code class="constant">True</code> if the X server of
+            connection <em class="parameter"><code>dpy</code></em> supports the GLX extension,
+            <code class="constant">False</code> otherwise.
+            If <code class="constant">True</code> is returned,
+            then <em class="parameter"><code>errorBase</code></em> and <em class="parameter"><code>eventBase</code></em> return the error base and event base of
+            the GLX extension.  These values should be added to the constant
+            error and event values to determine the actual event or error values.
+            Otherwise, <em class="parameter"><code>errorBase</code></em> and <em class="parameter"><code>eventBase</code></em> are unchanged.
+        </p><p>
+            <em class="parameter"><code>errorBase</code></em> and <em class="parameter"><code>eventBase</code></em> do not return values if they are specified
+            as <code class="constant">NULL</code>.
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1" lang="en" xml:lang="en"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="glXQueryVersion"><span class="citerefentry"><span class="refentrytitle">glXQueryVersion</span></span></a>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

@@ -1,0 +1,313 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glEvalPoint"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glEvalPoint — generate and evaluate a single point in a mesh</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glEvalPoint1</b>(</code></td><td>GLint  </td><td><var class="pdparam">i</var><code>)</code>;</td></tr></table></div><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glEvalPoint2</b>(</code></td><td>GLint  </td><td><var class="pdparam">i</var>, </td></tr><tr><td> </td><td>GLint  </td><td><var class="pdparam">j</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>i</code></em></span></dt><dd><p>
+                    Specifies the integer value for grid domain variable
+                    <math overflow="scroll"><mi mathvariant="italic">i</mi></math>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>j</code></em></span></dt><dd><p>
+                    Specifies the integer value for grid domain variable
+                    <math overflow="scroll"><mi mathvariant="italic">j</mi></math>
+                    (<code class="function">glEvalPoint2</code> only).
+                </p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+            <a class="citerefentry" href="glMapGrid"><span class="citerefentry"><span class="refentrytitle">glMapGrid</span></span></a> and <a class="citerefentry" href="glEvalMesh"><span class="citerefentry"><span class="refentrytitle">glEvalMesh</span></span></a> are used in tandem to efficiently
+            generate and evaluate a series of evenly spaced map domain values.
+            <code class="function">glEvalPoint</code> can be used to evaluate a single grid point in the same gridspace
+            that is traversed by <a class="citerefentry" href="glEvalMesh"><span class="citerefentry"><span class="refentrytitle">glEvalMesh</span></span></a>.
+            Calling <code class="function">glEvalPoint1</code> is equivalent to calling
+            </p><pre class="programlisting">
+glEvalCoord1( <math overflow="scroll">
+
+     	          <mrow>
+     	              <mrow>
+     	                  <mn>i</mn>
+     	                  <mo>·</mo>
+     	                  <mo>Δ</mo>
+     	                  <mi mathvariant="italic">u</mi>
+     	              </mrow>
+     	              <mo>+</mo>
+     	              <msub>
+     	                  <mi mathvariant="italic">u</mi>
+     	                  <mn>1</mn>
+     	              </msub>
+     	          </mrow>
+              </math> );
+         </pre><p>
+            where
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mo>Δ</mo>
+                        <mi mathvariant="italic">u</mi>
+                    </mrow>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mfenced open="(" close=")">
+                            <mrow>
+                                <msub><mi mathvariant="italic">u</mi>
+                                <mn>2</mn>
+                                </msub>
+                                <mo>-</mo>
+                                <msub><mi mathvariant="italic">u</mi>
+                                <mn>1</mn>
+                                </msub>
+                            </mrow>
+                        </mfenced>
+                        <mi mathvariant="italic">n</mi>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+        </p><p>
+            and
+            <math overflow="scroll"><mi mathvariant="italic">n</mi></math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>1</mn>
+                </msub>
+            </math>,
+            and
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>
+            are the arguments to the most recent <a class="citerefentry" href="glMapGrid1"><span class="citerefentry"><span class="refentrytitle">glMapGrid1</span></span></a> command.
+            The one absolute numeric requirement is that if
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">i</mi>
+                    <mo>=</mo>
+                    <mi mathvariant="italic">n</mi>
+                </mrow>
+            </math>,
+            then the value computed from
+            <math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mi mathvariant="italic">i</mi>
+                        <mo>·</mo>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">u</mi>
+                        </mrow>
+                    </mrow>
+                    <mo>+</mo>
+                    <msub><mi mathvariant="italic">u</mi>
+                    <mn>1</mn>
+                    </msub>
+                </mrow>
+            </math>
+            is exactly
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>.
+        </p><p>
+            In the two-dimensional case, <code class="function">glEvalPoint2</code>, let
+        </p><p>
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mo>Δ</mo>
+                        <mi mathvariant="italic">u</mi>
+                    </mrow>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mfenced open="(" close=")">
+                            <mrow>
+                                <msub><mi mathvariant="italic">u</mi>
+                                <mn>2</mn>
+                                </msub>
+                                <mo>-</mo>
+                                <msub><mi mathvariant="italic">u</mi>
+                                <mn>1</mn>
+                                </msub>
+                            </mrow>
+                        </mfenced>
+                        <mi mathvariant="italic">n</mi>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+            </p><p>
+                </p><div class="informalequation"><math overflow="scroll">
+
+                    <mrow>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">v</mi>
+                        </mrow>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mfenced open="(" close=")">
+                                <mrow>
+                                    <msub><mi mathvariant="italic">v</mi>
+                                    <mn>2</mn>
+                                    </msub>
+                                    <mo>-</mo>
+                                    <msub><mi mathvariant="italic">v</mi>
+                                    <mn>1</mn>
+                                    </msub>
+                                </mrow>
+                            </mfenced>
+                            <mi mathvariant="italic">m</mi>
+                        </mfrac>
+                    </mrow>
+                </math></div><p>
+            </p><p>
+        </p><p>
+            where
+            <math overflow="scroll"><mi mathvariant="italic">n</mi></math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>1</mn>
+                </msub>
+            </math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>,
+            <math overflow="scroll"><mi mathvariant="italic">m</mi></math>,
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">v</mi>
+                <mn>1</mn>
+                </msub>
+            </math>,
+            and
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">v</mi>
+                <mn>2</mn>
+                </msub>
+            </math>
+            are the arguments to the most recent <a class="citerefentry" href="glMapGrid2"><span class="citerefentry"><span class="refentrytitle">glMapGrid2</span></span></a> command.
+            Then the <code class="function">glEvalPoint2</code> command is equivalent to calling
+            </p><pre class="programlisting">
+glEvalCoord2( <math overflow="scroll">
+
+		        <mrow>
+			    <mrow>
+			        <mn>i</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">u</mi>
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">u</mi>
+		                <mn>1</mn>
+		            </msub>
+			    <mo>,</mo>
+
+			    <mrow>
+			        <mn>j</mn>
+				<mo>·</mo>
+			        <mo>Δ</mo>
+		                <mi mathvariant="italic">v</mi>
+
+			    </mrow>
+		            <mo>+</mo>
+		            <msub>
+		                <mi mathvariant="italic">v</mi>
+		                <mn>1</mn>
+		            </msub>
+			</mrow>
+		    </math> );
+            </pre><p>
+            The only absolute numeric requirements are that if
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">i</mi>
+                    <mo>=</mo>
+                    <mi mathvariant="italic">n</mi>
+                </mrow>
+            </math>,
+            then the value computed from
+            <math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mi mathvariant="italic">i</mi>
+                        <mo>·</mo>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">u</mi>
+                        </mrow>
+                    </mrow>
+                    <mo>+</mo>
+                    <msub><mi mathvariant="italic">u</mi>
+                    <mn>1</mn>
+                    </msub>
+                </mrow>
+            </math>
+            is exactly
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">u</mi>
+                <mn>2</mn>
+                </msub>
+            </math>,
+            and if
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">j</mi>
+                    <mo>=</mo>
+                    <mi mathvariant="italic">m</mi>
+                </mrow>
+            </math>,
+            then the value computed from
+            <math overflow="scroll">
+
+                <mrow>
+                    <mrow>
+                        <mi mathvariant="italic">j</mi>
+                        <mo>·</mo>
+                        <mrow>
+                            <mo>Δ</mo>
+                            <mi mathvariant="italic">v</mi>
+                        </mrow>
+                    </mrow>
+                    <mo>+</mo>
+                    <msub><mi mathvariant="italic">v</mi>
+                    <mn>1</mn>
+                    </msub>
+                </mrow>
+            </math>
+            is exactly
+            <math overflow="scroll">
+
+                <msub><mi mathvariant="italic">v</mi>
+                <mn>2</mn>
+                </msub>
+            </math>.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP1_GRID_DOMAIN</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP2_GRID_DOMAIN</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP1_GRID_SEGMENTS</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MAP2_GRID_SEGMENTS</code>
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1" lang="en" xml:lang="en"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="glEvalCoord"><span class="citerefentry"><span class="refentrytitle">glEvalCoord</span></span></a>,
+            <a class="citerefentry" href="glEvalMesh"><span class="citerefentry"><span class="refentrytitle">glEvalMesh</span></span></a>,
+            <a class="citerefentry" href="glMap1"><span class="citerefentry"><span class="refentrytitle">glMap1</span></span></a>,
+            <a class="citerefentry" href="glMap2"><span class="citerefentry"><span class="refentrytitle">glMap2</span></span></a>,
+            <a class="citerefentry" href="glMapGrid"><span class="citerefentry"><span class="refentrytitle">glMapGrid</span></span></a>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

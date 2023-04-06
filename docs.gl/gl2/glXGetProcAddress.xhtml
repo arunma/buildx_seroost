@@ -1,0 +1,18 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glXGetProcAddress"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glXGetProcAddress — obtain a pointer to an OpenGL or GLX function</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">void(*)() <b class="fsfunc">glXGetProcAddress</b>(</code></td><td>const GLubyte *  </td><td><var class="pdparam">procName</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>procName</code></em></span></dt><dd><p>
+                    Specifies the name of the OpenGL or GLX function whose address is to be returned.
+                </p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+            <code class="function">glXGetProcAddress</code> returns the address of the function specified in <em class="parameter"><code>procName</code></em>.  This is
+            necessary in environments where the OpenGL link library exports a different
+            set of functions than the runtime library.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="notes"></a><h2>Notes</h2><p>
+            A <code class="constant">NULL</code> pointer is returned if function requested is not suported
+            in the implementation being queried.
+        </p><p>
+            GLU functions are not queryable due to the fact that the library may not be
+            loaded at the time of the query.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

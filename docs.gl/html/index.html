@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<title>docs.gl</title>
+
+	<link rel="shortcut icon" href="/favicon.ico" />
+	{$jquery}
+	<link rel="stylesheet" href="jquery-ui.css" />
+	{$jqueryui}
+	<script src="jquery-cookie/jquery.cookie.js"></script>
+
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link id="pagestyle" href="style_light.css" rel="stylesheet" type="text/css" />
+	<link rel="search" type="application/opensearchdescription+xml" title="docs.GL Search" href="opensearch.xml">
+
+	<style>
+		#commandlist {
+			width: 600px;
+			margin-top: 5px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.logo-bg {
+			text-align: center;
+
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+
+		.logo {
+			font-family: "Helvetica Neue", "Helvetica";
+			font-weight: 300;
+			font-size: 76px;
+			padding: 20px;
+			margin: 0;
+			margin-top: 20px;
+		}
+
+		.logo-desc {
+			font-family: "Helvetica Neue", "Helvetica";
+			font-weight: 200;
+		}
+
+		#search-container {
+			width: 100%;
+			margin-top: 30px;
+			margin-bottom: 10px;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+
+		#version-select-button {
+			font-size: 14px;
+			border: none;
+			border-radius: 4px;
+			outline: none;
+			padding: 1px;
+			float:left;
+		}
+
+		.center-container {
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+			display: inline-block;
+		}
+
+		.result-headers {
+			width: 600px;
+			margin-top: 20px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.commandsearch {
+			display: none;
+		}
+
+		.commandcolumn, .versioncolumn, .slversioncolumn {
+			display: block;
+			float: left;
+			margin: 4px;
+		}
+
+		.commandcolumn {
+			text-align: left;
+			padding: 4px;
+		}
+
+		.versioncolumn {
+			width: 30px;
+			float: right;
+			padding: 4px;
+			text-align: center;
+		}
+
+		.slversioncolumn {
+			width: 60px;
+			float: right;
+			padding: 4px;
+			text-align: center;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+
+		.indexcommand {
+			width: 100%;
+			padding: 4px;
+			margin-bottom: 10px;
+			display: inline-block;
+		  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+		  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+		  box-sizing: border-box;         /* Opera/IE 8+ */
+		}
+	</style>
+	<link id="mediastyle" href="media.css" rel="stylesheet" type="text/css" />
+	<script>
+		$(function() {
+			window.search_api = "all";
+
+			front_filter_fn = function() {
+				version = window.search_api.replace(".", "");
+				if (!version || typeof version == 'undefined')
+					version = 'all';
+
+				search_str = $("#frontsearch").val().toLowerCase();
+
+				hide_commands = function() {
+					$(this).addClass("hidden");
+
+					command_search = $(".commandsearch", this).text().toLowerCase();
+
+					if (command_search.indexOf(search_str) == -1)
+						return;
+
+					if (version == 'all') {
+						$(this).removeClass("hidden");
+					} else {
+						var classList = $(this).attr('class').split(/\s+/);
+						for (var i = 0; i < classList.length; i++) {
+							if (classList[i] === version) {
+								$(this).removeClass("hidden");
+								break;
+							}
+						}
+					}
+				};
+
+				$(".indexcommand").each(hide_commands);
+			}
+
+			window.base_directory = "";
+
+			$( "#version-select" ).selectmenu({
+				width: 75,
+				change: function( event, ui ) {
+					window.search_api = ui.item.value;
+					//set_api_version(ui.item.value);
+					front_filter_fn();
+				}
+			});
+
+			$("#frontsearch").keyup(front_filter_fn);
+			let url_search = new URLSearchParams(window.location.search).get("search");
+			if (url_search) {
+				$("#frontsearch").val(url_search)
+				front_filter_fn()
+			}
+
+			$("#light-toggle").click(function() {
+				$("#pagestyle").attr("href", "style_light.css");
+				$.cookie("pagestyle", "light", {path: '/'});
+			});
+
+			$("#dark-toggle").click(function() {
+				$("#pagestyle").attr("href", "style_dark.css");
+				$.cookie("pagestyle", "dark", {path: '/'});
+			});
+			
+			if ($.cookie("pagestyle") == 'light')
+				$("#light-toggle").click();
+
+			if ($.cookie("pagestyle") == 'dark')
+				$("#dark-toggle").click();
+
+			/*if ($.cookie("pagestyle") == 'light')
+				$("#pagestyle").attr("href", "style_light.css");
+
+			if ($.cookie("pagestyle") == 'dark')
+				$("#pagestyle").attr("href", "style_dark.css");*/
+		});
+</script>
+
+</head>
+<body>
+
+	<div style="width: 950px; margin-left: auto; margin-right: auto; text-align: right">
+	</div>
+	<div class="logo-bg">
+		<div class="logo-container">
+			<h1 class="logo">docs.<span class="thicken">GL</span></h1>
+			<p class="logo-desc">OpenGL API Documentation</p>
+			<div class="toggle-container">
+					<a href="about.html">about docs.gl</a><br/>
+					<a id="light-toggle" href="#">Light</a> | <a id="dark-toggle" href="#">Dark</a>
+			</div>
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+	<div id="search-container">
+		<div class="center-container">
+			<select id="version-select">
+				<option value="es20">GLES 2.1</option>
+				<option value="es30">GLES 3.0</option>
+				<option value="es31">GLES 3.1</option>
+				<option value="gl21">GL 2.1</option>
+				<option value="gl30">GL 3.0</option>
+				<option value="gl31">GL 3.1</option>
+				<option value="gl32">GL 3.2</option>
+				<option value="gl33">GL 3.3</option>
+				<option value="gl40">GL 4.0</option>
+				<option value="gl41">GL 4.1</option>
+				<option value="gl42">GL 4.2</option>
+				<option value="gl43">GL 4.3</option>
+				<option value="gl44">GL 4.4</option>
+				<option value="gl45">GL 4.5</option>
+				<option selected='selected' value='all'>All</option>
+			</select>
+			<input id="frontsearch" size=50 autofocus />
+		</div>
+		<span style="clear:both;"></span>
+	</div>
+	<div class="result-headers">
+		<span style="float:left;">Command</span>
+		<span style="float:right;">Available in</span>
+		<div style="clear:both;"></div>
+	</div>
+	<div id="commandlist">{$commandlist}</div>
+</body>
+</html>

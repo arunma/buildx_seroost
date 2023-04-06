@@ -1,0 +1,190 @@
+<div class="refentry" title="glMultMatrix"><a id="glMultMatrix"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glMultMatrix — multiply the current matrix with the specified
+	matrix</p></div><div class="refsynopsisdiv" title="C Specification"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glMultMatrixf</b>(</code></td><td>const GLfloat * <var class="pdparam">m</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glMultMatrixx</b>(</code></td><td>const GLfixed * <var class="pdparam">m</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1" title="Parameters"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term">
+		    <em class="parameter"><code>m</code></em>
+		</span></dt><dd><p>Points to 16 consecutive values that are used as
+		    the elements of a
+		    <math overflow="scroll">
+			<mn>4</mn><mo>x</mo><mn>4</mn>
+		    </math>
+		    column-major matrix.</p></dd></dl></div></div><div class="refsect1" title="Description"><a id="description"></a><h2>Description</h2><p><code class="function">glMultMatrix</code>
+	multiplies the current matrix with the one specified using
+	<em class="parameter"><code>m</code></em>,
+	and replaces the current matrix with the product.</p><p>The current matrix is determined by the current matrix mode (see
+	<a class="citerefentry" href="glMatrixMode"><span class="citerefentry"><span class="refentrytitle">glMatrixMode</span></span></a>).
+	It is either the projection matrix, modelview matrix, or the
+	texture matrix.</p></div><div class="refsect1" title="Examples"><a id="examples"></a><h2>Examples</h2><p>If the current matrix is <em class="replaceable"><code>C</code></em>,
+	and the coordinates to be transformed are,
+	<math overflow="scroll">
+	    <mi>v</mi><mo>=</mo>
+	    <mfenced>
+		<mrow><mi>v</mi><mo>[</mo><mn>0</mn><mo>]</mo></mrow>
+		<mrow><mi>v</mi><mo>[</mo><mn>1</mn><mo>]</mo></mrow>
+		<mrow><mi>v</mi><mo>[</mo><mn>2</mn><mo>]</mo></mrow>
+		<mrow><mi>v</mi><mo>[</mo><mn>3</mn><mo>]</mo></mrow>
+	    </mfenced>
+	</math>,
+	then the current transformation is
+	<math overflow="scroll">
+	    <mi>C</mi><mo>x</mo><mi>v</mi>
+	</math>, or
+	</p><div class="informalequation"><math overflow="scroll"><mrow>
+	    <mo>(</mo>
+	    <mtable class="matrix">
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>0</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>4</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>8</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>12</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>1</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>5</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>9</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>13</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>2</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>6</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>10</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>14</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>3</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>7</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>11</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>15</mn><mo>]</mo></mtd>
+		</mtr>
+	    </mtable>
+	    <mo>)</mo>
+	    <mo>x</mo>
+	    <mo>(</mo>
+	    <mtable class="vector">
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>0</mn><mo>]</mo></mtd></mtr>
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>1</mn><mo>]</mo></mtd></mtr>
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>2</mn><mo>]</mo></mtd></mtr>
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>3</mn><mo>]</mo></mtd></mtr>
+	    </mtable>
+	    <mo>)</mo>
+	</mrow></math></div><p>Calling
+	<code class="function">glMultMatrix</code>
+	with an argument of
+	<math overflow="scroll">
+	    <mrow>
+		<mi>m</mi><mo>=</mo>
+		<mi>m</mi><mo>[</mo><mn>0</mn><mo>]</mo>,
+		<mi>m</mi><mo>[</mo><mn>1</mn><mo>]</mo>,
+		<mo>...</mo>
+		<mi>m</mi><mo>[</mo><mn>15</mn><mo>]</mo>
+	    </mrow>
+	</math>
+	replaces the current transformation with
+	<math overflow="scroll">
+	    <mfenced><mrow><mi>C</mi><mo>x</mo><mi>M</mi></mrow></mfenced>
+	    <mo>x</mo><mi>v</mi>
+	</math>, or</p><div class="informalequation"><math overflow="scroll"><mrow>
+	    <mo>(</mo>
+	    <mtable class="matrix">
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>0</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>4</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>8</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>12</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>1</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>5</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>9</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>13</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>2</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>6</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>10</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>14</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>c</mi><mo>[</mo><mn>3</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>7</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>11</mn><mo>]</mo></mtd>
+		    <mtd><mi>c</mi><mo>[</mo><mn>15</mn><mo>]</mo></mtd>
+		</mtr>
+	    </mtable>
+	    <mo>)</mo>
+	    <mo>x</mo>
+	    <mo>(</mo>
+	    <mtable class="matrix">
+		<mtr>
+		    <mtd><mi>m</mi><mo>[</mo><mn>0</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>4</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>8</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>12</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>m</mi><mo>[</mo><mn>1</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>5</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>9</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>13</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>m</mi><mo>[</mo><mn>2</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>6</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>10</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>14</mn><mo>]</mo></mtd>
+		</mtr>
+		<mtr>
+		    <mtd><mi>m</mi><mo>[</mo><mn>3</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>7</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>11</mn><mo>]</mo></mtd>
+		    <mtd><mi>m</mi><mo>[</mo><mn>15</mn><mo>]</mo></mtd>
+		</mtr>
+	    </mtable>
+	    <mo>)</mo>
+	    <mo>x</mo>
+	    <mo>(</mo>
+	    <mtable class="vector">
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>0</mn><mo>]</mo></mtd></mtr>
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>1</mn><mo>]</mo></mtd></mtr>
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>2</mn><mo>]</mo></mtd></mtr>
+		<mtr><mtd><mi>v</mi><mo>[</mo><mn>3</mn><mo>]</mo></mtd></mtr>
+	    </mtable>
+	    <mo>)</mo>
+	</mrow></math></div><p>Where
+	    ``<math overflow="scroll"><mo>x</mo></math>''
+	    denotes matrix multiplication, and
+	    <em class="replaceable"><code>v</code></em>
+	    is represented as a
+	    <math overflow="scroll">
+	    <mn>4</mn><mo>x</mo><mn>1</mn>
+	    </math>
+	    matrix.</p></div><div class="refsect1" title="Notes"><a id="notes"></a><h2>Notes</h2><p>While the elements of the matrix may be specified with
+	fixed point or single precision, the GL may store or operate on
+	these values in less than single precision.</p><p>In many computer languages
+	<math overflow="scroll">
+	    <mn>4</mn><mo>x</mo><mn>4</mn>
+	</math>
+	arrays are represented in row-major order. The transformations
+	just described represent these matrices in column-major order.
+	The order of the multiplication is important. For example, if
+	the current transformation is a rotation, and
+	<code class="function">glMultMatrix</code>
+	is called with a translation matrix, the translation is done
+	directly on the coordinates to be transformed, while the
+	rotation is done on the results of that translation.</p></div><div class="refsect1" title="Associated Gets"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MATRIX_MODE</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_MODELVIEW_MATRIX</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_PROJECTION_MATRIX</code>
+        </p><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_TEXTURE_MATRIX</code>
+        </p></div><div class="refsect1" title="See Also"><a id="seealso"></a><h2>See Also</h2><p>
+	<a class="citerefentry" href="glLoadIdentity"><span class="citerefentry"><span class="refentrytitle">glLoadIdentity</span></span></a>,
+	<a class="citerefentry" href="glLoadMatrix"><span class="citerefentry"><span class="refentrytitle">glLoadMatrix</span></span></a>,
+	<a class="citerefentry" href="glMatrixMode"><span class="citerefentry"><span class="refentrytitle">glMatrixMode</span></span></a>,
+	<a class="citerefentry" href="glPushMatrix"><span class="citerefentry"><span class="refentrytitle">glPushMatrix</span></span></a>
+	</p></div><div class="refsect1" title="Copyright"><a id="copyright"></a><h2>Copyright</h2><p>
+	    Copyright © 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div>

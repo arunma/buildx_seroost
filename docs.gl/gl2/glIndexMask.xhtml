@@ -1,0 +1,44 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glIndexMask"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glIndexMask — control the writing of individual bits in the color index buffers</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glIndexMask</b>(</code></td><td>GLuint  </td><td><var class="pdparam">mask</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>mask</code></em></span></dt><dd><p>
+                    Specifies a bit mask to enable and disable the writing of individual bits
+                    in the color index buffers.
+                    Initially, the mask is all 1's.
+                </p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+            <code class="function">glIndexMask</code> controls the writing of individual bits in the color index buffers.
+            The least significant
+            <math overflow="scroll"><mi mathvariant="italic">n</mi></math>
+            bits of <em class="parameter"><code>mask</code></em>,
+            where
+            <math overflow="scroll"><mi mathvariant="italic">n</mi></math>
+            is the number of bits in a color index buffer,
+            specify a mask.
+            Where a 1 (one) appears in the mask,
+            it's possible to write to the corresponding bit in the color index
+            buffer (or buffers).
+            Where a 0 (zero) appears,
+            the corresponding bit is write-protected.
+        </p><p>
+            This mask is used only in color index mode,
+            and it affects only the buffers currently selected for writing
+            (see <a class="citerefentry" href="glDrawBuffer"><span class="citerefentry"><span class="refentrytitle">glDrawBuffer</span></span></a>).
+            Initially, all bits are enabled for writing.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="errors"></a><h2>Errors</h2><p>
+            <code class="constant">GL_INVALID_OPERATION</code> is generated if <code class="function">glIndexMask</code>
+            is executed between the execution of <a class="citerefentry" href="glBegin"><span class="citerefentry"><span class="refentrytitle">glBegin</span></span></a>
+            and the corresponding execution of <a class="citerefentry" href="glEnd"><span class="citerefentry"><span class="refentrytitle">glEnd</span></span></a>.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_INDEX_WRITEMASK</code>
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1" lang="en" xml:lang="en"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="glColorMask"><span class="citerefentry"><span class="refentrytitle">glColorMask</span></span></a>,
+            <a class="citerefentry" href="glDepthMask"><span class="citerefentry"><span class="refentrytitle">glDepthMask</span></span></a>,
+            <a class="citerefentry" href="glDrawBuffer"><span class="citerefentry"><span class="refentrytitle">glDrawBuffer</span></span></a>,
+            <a class="citerefentry" href="glIndex"><span class="citerefentry"><span class="refentrytitle">glIndex</span></span></a>,
+            <a class="citerefentry" href="glIndexPointer"><span class="citerefentry"><span class="refentrytitle">glIndexPointer</span></span></a>,
+            <a class="citerefentry" href="glStencilMask"><span class="citerefentry"><span class="refentrytitle">glStencilMask</span></span></a>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

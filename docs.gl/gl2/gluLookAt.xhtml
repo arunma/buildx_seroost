@@ -1,0 +1,294 @@
+<div class="refentry"><a id="gluLookAt"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>gluLookAt — define a viewing transformation</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table" style="cellspacing: 0; cellpadding: 0;"><tr><td><code class="funcdef">void <strong class="fsfunc">gluLookAt</strong>(</code></td><td>GLdouble <var class="pdparam">eyeX</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">eyeY</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">eyeZ</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">centerX</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">centerY</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">centerZ</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">upX</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">upY</var>, </td></tr><tr><td> </td><td>GLdouble <var class="pdparam">upZ</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>eyeX</code></em>, </span><span class="term"><em class="parameter"><code>eyeY</code></em>, </span><span class="term"><em class="parameter"><code>eyeZ</code></em></span></dt><dd><p>
+                    Specifies the position of the eye point.
+                </p></dd><dt><span class="term"><em class="parameter"><code>centerX</code></em>, </span><span class="term"><em class="parameter"><code>centerY</code></em>, </span><span class="term"><em class="parameter"><code>centerZ</code></em></span></dt><dd><p>
+                    Specifies the position of the reference point.
+                </p></dd><dt><span class="term"><em class="parameter"><code>upX</code></em>, </span><span class="term"><em class="parameter"><code>upY</code></em>, </span><span class="term"><em class="parameter"><code>upZ</code></em></span></dt><dd><p>
+                    Specifies the direction of the <span class="emphasis"><em>up</em></span> vector.
+                </p></dd></dl></div></div><div class="refsect1"><a id="description"></a><h2>Description</h2><p>
+            <code class="function">gluLookAt</code> creates a viewing matrix derived from an eye point, a reference
+            point indicating the center of the scene, and an <span class="emphasis"><em>UP</em></span> vector.
+        </p><p>
+            The matrix
+            maps the reference point to the negative <span class="emphasis"><em>z</em></span> axis and the
+            eye point to the origin.
+            When a typical projection matrix is used,
+            the center of the scene therefore maps to the center of the viewport.
+            Similarly, the direction described by the <span class="emphasis"><em>UP</em></span>
+            vector projected onto the viewing plane is mapped to the positive <span class="emphasis"><em>y</em></span>
+            axis so that it points upward in the viewport.
+            The <span class="emphasis"><em>UP</em></span> vector must not be parallel to the line of sight from the
+            eye point to the reference point.
+        </p><p>
+            Let
+        </p><p>
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">F</mi>
+                    <mo>=</mo>
+                    <mfenced open="(" close=")">
+                        <mtable>
+                            <mtr>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">centerX</mi>
+                                        <mo>-</mo>
+                                        <mi mathvariant="italic">eyeX</mi>
+                                    </mrow>
+                                </mtd>
+                            </mtr>
+                            <mtr>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">centerY</mi>
+                                        <mo>-</mo>
+                                        <mi mathvariant="italic">eyeY</mi>
+                                    </mrow>
+                                </mtd>
+                            </mtr>
+                            <mtr>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">centerZ</mi>
+                                        <mo>-</mo>
+                                        <mi mathvariant="italic">eyeZ</mi>
+                                    </mrow>
+                                </mtd>
+                            </mtr>
+                        </mtable>
+                    </mfenced>
+                </mrow>
+            </math></div><p>
+        </p><p>
+        </p><p>
+            Let <span class="emphasis"><em>UP</em></span> be the vector
+            <math overflow="scroll">
+
+                <mfenced open="(" close=")">
+                    <mi mathvariant="italic">upX</mi>
+                    <mi mathvariant="italic">upY</mi>
+                    <mi mathvariant="italic">upZ</mi>
+                </mfenced>
+            </math>.
+        </p><p>
+            Then normalize as follows:
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">f</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mi mathvariant="italic">F</mi>
+                        <mfenced open="" close="">
+                            <mfenced open="∥" close="∥">
+                                <mi mathvariant="italic">F</mi>
+                            </mfenced>
+                        </mfenced>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+        </p><p>
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <msup><mi mathvariant="italic">UP</mi>
+                    <mo>″</mo>
+                    </msup>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mi mathvariant="italic">UP</mi>
+                        <mfenced open="" close="">
+                            <mfenced open="∥" close="∥">
+                                <mi mathvariant="italic">UP</mi>
+                            </mfenced>
+                        </mfenced>
+                    </mfrac>
+                </mrow>
+            </math></div><p>
+        </p><p>
+        </p><p>
+            Finally, let
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">s</mi>
+                    <mo>=</mo>
+                    <mrow>
+                        <mi mathvariant="italic">f</mi>
+                        <mo>×</mo>
+                        <msup><mi mathvariant="italic">UP</mi>
+                        <mo>″</mo>
+                        </msup>
+                    </mrow>
+                </mrow>
+            </math>,
+            and
+            <math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">u</mi>
+                    <mo>=</mo>
+                    <mrow>
+                        <mfenced open="(" close=")">
+                            <mfrac>
+                                <mi mathvariant="italic">s</mi>
+                                <mfenced open="∥" close="∥">
+                                    <mi mathvariant="italic">s</mi>
+                                </mfenced>
+                            </mfrac>
+                        </mfenced>
+                        <mo>×</mo>
+                        <mi mathvariant="italic">f</mi>
+                    </mrow>
+                </mrow>
+            </math>.
+        </p><p>
+        </p><p>
+            M is then constructed as follows:
+            </p><div class="informalequation"><math overflow="scroll">
+
+                <mrow>
+                    <mi mathvariant="italic">M</mi>
+                    <mo>=</mo>
+                    <mfenced open="(" close=")">
+                        <mtable>
+                            <mtr>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">s</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="[" close="]">
+                                            <mn>0</mn>
+                                        </mfenced>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">s</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="[" close="]">
+                                            <mn>1</mn>
+                                        </mfenced>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">s</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="[" close="]">
+                                            <mn>2</mn>
+                                        </mfenced>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mn>0</mn>
+                                </mtd>
+                            </mtr>
+                            <mtr>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">u</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="[" close="]">
+                                            <mn>0</mn>
+                                        </mfenced>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">u</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="[" close="]">
+                                            <mn>1</mn>
+                                        </mfenced>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mrow>
+                                        <mi mathvariant="italic">u</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="[" close="]">
+                                            <mn>2</mn>
+                                        </mfenced>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mn>0</mn>
+                                </mtd>
+                            </mtr>
+                            <mtr>
+                                <mtd>
+                                    <mrow>
+                                        <mo>-</mo>
+                                        <mrow>
+                                            <mi mathvariant="italic">f</mi>
+                                            <mo>⁡</mo>
+                                            <mfenced open="[" close="]">
+                                                <mn>0</mn>
+                                            </mfenced>
+                                        </mrow>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mrow>
+                                        <mo>-</mo>
+                                        <mrow>
+                                            <mi mathvariant="italic">f</mi>
+                                            <mo>⁡</mo>
+                                            <mfenced open="[" close="]">
+                                                <mn>1</mn>
+                                            </mfenced>
+                                        </mrow>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mrow>
+                                        <mo>-</mo>
+                                        <mrow>
+                                            <mi mathvariant="italic">f</mi>
+                                            <mo>⁡</mo>
+                                            <mfenced open="[" close="]">
+                                                <mn>2</mn>
+                                            </mfenced>
+                                        </mrow>
+                                    </mrow>
+                                </mtd>
+                                <mtd>
+                                    <mn>0</mn>
+                                </mtd>
+                            </mtr>
+                            <mtr>
+                                <mtd>
+                                    <mn>0</mn>
+                                </mtd>
+                                <mtd>
+                                    <mn>0</mn>
+                                </mtd>
+                                <mtd>
+                                    <mn>0</mn>
+                                </mtd>
+                                <mtd>
+                                    <mn>1</mn>
+                                </mtd>
+                            </mtr>
+                        </mtable>
+                    </mfenced>
+                </mrow>
+            </math></div><p>
+        </p><p>
+            and <code class="function">gluLookAt</code> is equivalent to
+            </p><pre class="programlisting">
+glMultMatrixf(M);
+glTranslated(-eyex, -eyey, -eyez);
+            </pre><p>
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="gluPerspective"><span class="citerefentry"><span class="refentrytitle">gluPerspective</span></span></a>,
+            <a class="citerefentry" href="glFrustum"><span class="citerefentry"><span class="refentrytitle">glFrustum</span></span></a>
+        </p></div><div class="refsect1"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

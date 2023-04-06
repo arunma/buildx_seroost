@@ -1,0 +1,69 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glMultiTexCoord"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glMultiTexCoord — set the current texture coordinates</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glMultiTexCoord4f</b>(</code></td><td>GLenum <var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">s</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">t</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">r</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">q</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glMultiTexCoord4x</b>(</code></td><td>GLenum <var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">s</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">t</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">r</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">q</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term">
+                    <em class="parameter"><code>target</code></em>
+                </span></dt><dd><p>Specifies the texture unit whose coordinates should be
+                    modified. The number of texture units is implementation
+                    dependent, but must be at least
+                    <span>two</span>.
+                    Symbolic constant must be one of
+                    <code class="constant">GL_TEXTURE</code><math overflow="scroll"><mi mathvariant="italic">i</mi></math>,
+                    where i ranges from 0 to <code class="constant">GL_MAX_TEXTURE_UNITS</code> - 1,
+                    which is an implementation-dependent value.</p></dd><dt><span class="term">
+                <em class="parameter"><code>s</code></em>,
+                <em class="parameter"><code>t</code></em>,
+                <em class="parameter"><code>r</code></em>,
+                <em class="parameter"><code>q</code></em>
+                </span></dt><dd><p>Specify
+                    <em class="parameter"><code>s</code></em>,
+                    <em class="parameter"><code>t</code></em>,
+                    <em class="parameter"><code>r</code></em>, and
+                    <em class="parameter"><code>q</code></em> texture coordinates for
+                    <em class="parameter"><code>target</code></em> texture unit.</p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+        <code class="function">glMultiTexCoord</code>
+        specifies the four texture coordinates as
+        (<em class="parameter"><code>s</code></em>,
+        <em class="parameter"><code>t</code></em>,
+        <em class="parameter"><code>r</code></em>,
+        <em class="parameter"><code>q</code></em>).</p><p>The current texture coordinates are part of the data that
+        is associated with each vertex.
+            Initially, the values for
+            <math overflow="scroll">
+
+                <mfenced open="(" close=")">
+                    <mi mathvariant="italic">s</mi>
+                    <mi mathvariant="italic">t</mi>
+                    <mi mathvariant="italic">r</mi>
+                    <mi mathvariant="italic">q</mi>
+                </mfenced>
+            </math>
+            are
+            <math overflow="scroll">
+
+                <mfenced open="(" close=")">
+                    <mn>0</mn>
+                    <mn>0</mn>
+                    <mn>0</mn>
+                    <mn>1</mn>
+                </mfenced>
+            </math>.</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="notes"></a><h2>Notes</h2><p>It is always the case that
+        <math overflow="scroll">
+            <mi>GL_TEXTURE</mi><mi>i</mi> <mo>=</mo>
+            <mi>GL_TEXTURE0</mi><mo>+</mo><mi>i</mi>
+        </math>.</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a> with argument <code class="constant">GL_CURRENT_TEXTURE_COORDS</code> with appropriate
+            texture unit selected.
+        </p><p>
+        <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a>
+        with argument <code class="constant">GL_MAX_TEXTURE_UNITS</code>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="seealso"></a><h2>See Also</h2><p>
+        <a class="citerefentry" href="glActiveTexture"><span class="citerefentry"><span class="refentrytitle">glActiveTexture</span></span></a>,
+        <a class="citerefentry" href="glClientActiveTexture"><span class="citerefentry"><span class="refentrytitle">glClientActiveTexture</span></span></a>,
+        <a class="citerefentry" href="glColor"><span class="citerefentry"><span class="refentrytitle">glColor</span></span></a>,
+        <a class="citerefentry" href="glGet"><span class="citerefentry"><span class="refentrytitle">glGet</span></span></a>,
+        <a class="citerefentry" href="glNormal"><span class="citerefentry"><span class="refentrytitle">glNormal</span></span></a>,
+        <a class="citerefentry" href="glTexCoordPointer"><span class="citerefentry"><span class="refentrytitle">glTexCoordPointer</span></span></a>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="copyright"></a><h2>Copyright</h2><p>
+            Copyright © 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div>

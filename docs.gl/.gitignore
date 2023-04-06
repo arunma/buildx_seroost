@@ -1,0 +1,10 @@
+/htdocs
+/*.pyc
+/html/copy/jquery-ui.min.js
+/html/copy/jquery.min.js
+/html/copy/MathJax.js
+/html/copy/config
+/html/copy/jax
+/html/copy/*.woff
+.DS_Store
+/__pycache__

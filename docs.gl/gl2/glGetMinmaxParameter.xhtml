@@ -1,0 +1,50 @@
+<div class="refentry" lang="en" xml:lang="en"><a id="glGetMinmaxParameter"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glGetMinmaxParameter — get minmax parameters</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glGetMinmaxParameterfv</b>(</code></td><td>GLenum  </td><td><var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLenum  </td><td><var class="pdparam">pname</var>, </td></tr><tr><td> </td><td>GLfloat *  </td><td><var class="pdparam">params</var><code>)</code>;</td></tr></table></div><div class="funcsynopsis"><table><tr><td><code class="funcdef">void <b class="fsfunc">glGetMinmaxParameteriv</b>(</code></td><td>GLenum  </td><td><var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLenum  </td><td><var class="pdparam">pname</var>, </td></tr><tr><td> </td><td>GLint *  </td><td><var class="pdparam">params</var><code>)</code>;</td></tr></table></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>target</code></em></span></dt><dd><p>
+                    Must be
+                    <code class="constant">GL_MINMAX</code>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>pname</code></em></span></dt><dd><p>
+                    The parameter to be retrieved.
+                    Must be one of
+                    <code class="constant">GL_MINMAX_FORMAT</code> or
+                    <code class="constant">GL_MINMAX_SINK</code>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>params</code></em></span></dt><dd><p>
+                    A pointer to storage for the retrieved parameters.
+                </p></dd></dl></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>Description</h2><p>
+            <code class="function">glGetMinmaxParameter</code> retrieves parameters for the current minmax table by setting
+            <em class="parameter"><code>pname</code></em> to one of the following values:
+        </p><p>
+        </p><div class="informaltable"><table><colgroup><col /><col /></colgroup><thead><tr><th><span class="bold"><strong>
+                        Parameter
+                        </strong></span></th><th><span class="bold"><strong>
+                        Description
+                        </strong></span></th></tr></thead><tbody><tr><td>
+                        <code class="constant">GL_MINMAX_FORMAT</code>
+                        </td><td>
+                        Internal format of minmax table
+                        </td></tr><tr><td>
+                        <code class="constant">GL_MINMAX_SINK</code>
+                        </td><td>
+                        Value of the <span class="emphasis"><em>sink</em></span> parameter
+                        </td></tr></tbody></table></div><p>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="notes"></a><h2>Notes</h2><p>
+            <code class="function">glGetMinmaxParameter</code> is present only if <code class="code">ARB_imaging</code> is returned when <a class="citerefentry" href="glGetString"><span class="citerefentry"><span class="refentrytitle">glGetString</span></span></a>
+            is called with an argument of <code class="constant">GL_EXTENSIONS</code>.
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><a id="errors"></a><h2>Errors</h2><p>
+            <code class="constant">GL_INVALID_ENUM</code> is generated if <em class="parameter"><code>target</code></em> is not <code class="constant">GL_MINMAX</code>.
+        </p><p>
+            <code class="constant">GL_INVALID_ENUM</code> is generated if <em class="parameter"><code>pname</code></em> is not one of the allowable
+            values.
+        </p><p>
+            <code class="constant">GL_INVALID_OPERATION</code> is generated if <code class="function">glGetMinmaxParameter</code> is executed
+            between the execution of <a class="citerefentry" href="glBegin"><span class="citerefentry"><span class="refentrytitle">glBegin</span></span></a> and the corresponding
+            execution of <a class="citerefentry" href="glEnd"><span class="citerefentry"><span class="refentrytitle">glEnd</span></span></a>.
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1" lang="en" xml:lang="en"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="glMinmax"><span class="citerefentry"><span class="refentrytitle">glMinmax</span></span></a>,
+            <a class="citerefentry" href="glGetMinmax"><span class="citerefentry"><span class="refentrytitle">glGetMinmax</span></span></a>
+        </p></div><div class="refsect1" lang="en" xml:lang="en"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>

@@ -1,0 +1,134 @@
+<div class="refentry" title="glOrtho"><a id="glOrtho"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glOrtho — multiply the current matrix with an orthographic
+	matrix</p></div><div class="refsynopsisdiv" title="C Specification"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glOrthof</b>(</code></td><td>GLfloat <var class="pdparam">left</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">right</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">bottom</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">top</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">near</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">far</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div><table class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">glOrthox</b>(</code></td><td>GLfixed <var class="pdparam">left</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">right</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">bottom</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">top</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">near</var>, </td></tr><tr><td> </td><td>GLfixed <var class="pdparam">far</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1" title="Parameters"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term">
+		<em class="parameter"><code>left</code></em>,
+		<em class="parameter"><code>right</code></em>
+		</span></dt><dd><p>Specify the coordinates for the left and right
+		    vertical clipping planes.</p></dd><dt><span class="term">
+		<em class="parameter"><code>bottom</code></em>,
+		<em class="parameter"><code>top</code></em>
+		</span></dt><dd><p>Specify the coordinates for the bottom and top
+		    horizontal clipping planes.</p></dd><dt><span class="term">
+		<em class="parameter"><code>near</code></em>,
+		<em class="parameter"><code>far</code></em>
+		</span></dt><dd><p>Specify the distances to the nearer and farther
+		    depth clipping planes. These values are negative if the
+		    plane is to be behind the viewer.</p></dd></dl></div></div><div class="refsect1" title="Description"><a id="description"></a><h2>Description</h2><p><code class="function">glOrtho</code>
+	describes a transformation that produces a parallel projection.
+	The current matrix (see
+	<a class="citerefentry" href="glMatrixMode"><span class="citerefentry"><span class="refentrytitle">glMatrixMode</span></span></a>)
+	is multiplied by this matrix and the result replaces the
+	current matrix, as if
+	<a class="citerefentry" href="glMultMatrix"><span class="citerefentry"><span class="refentrytitle">glMultMatrix</span></span></a>
+	were called with the following matrix as its argument:</p><div class="informalequation"><math overflow="scroll">
+	    <mrow>
+		<mo>(</mo>
+		<mtable class="matrix">
+		    <mtr>
+			<mtd>
+			    <mfrac>
+				<mn>2</mn>
+				<mrow><mi>right</mi><mo>-</mo><mi>left</mi></mrow>
+			    </mfrac>
+			</mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><msub><mi>t</mi><mi>x</mi></msub></mtd>
+		    </mtr>
+		    <mtr>
+			<mtd><mn>0</mn></mtd>
+			<mtd>
+			    <mfrac>
+				<mn>2</mn>
+				<mrow><mi>top</mi><mo>-</mo><mi>bottom</mi></mrow>
+			    </mfrac>
+			</mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><msub><mi>t</mi><mi>y</mi></msub></mtd>
+		    </mtr>
+		    <mtr>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd>
+			    <mfrac>
+				<mrow><mo>-</mo><mn>2</mn></mrow>
+				<mrow><mi>far</mi><mo>-</mo><mi>near</mi></mrow>
+			    </mfrac>
+			</mtd>
+			<mtd><msub><mi>t</mi><mi>z</mi></msub></mtd>
+		    </mtr>
+		    <mtr>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>0</mn></mtd>
+			<mtd><mn>1</mn></mtd>
+		    </mtr>
+		</mtable>
+		<mo>)</mo>
+	    </mrow>
+	</math></div><p>where</p><div class="informalequation"><math overflow="scroll"><mtable>
+	    <mtr><mtd>
+		<msub><mi>t</mi><mi>x</mi></msub>
+		<mgroupalign></mgroupalign>
+		<mo>=</mo>
+		<mgroupalign></mgroupalign>
+		<mo>-</mo>
+		<mfrac>
+		    <mrow><mi>right</mi><mo>+</mo><mi>left</mi></mrow>
+		    <mrow><mi>right</mi><mo>-</mo><mi>left</mi></mrow>
+		</mfrac>
+	    </mtd></mtr>
+	    <mtr><mtd>
+		<msub><mi>t</mi><mi>y</mi></msub>
+		<mgroupalign></mgroupalign>
+		<mo>=</mo>
+		<mgroupalign></mgroupalign>
+		<mo>-</mo>
+		<mfrac>
+		    <mrow><mi>top</mi><mo>+</mo><mi>bottom</mi></mrow>
+		    <mrow><mi>top</mi><mo>-</mo><mi>bottom</mi></mrow>
+		</mfrac>
+	    </mtd></mtr>
+	    <mtr><mtd>
+		<msub><mi>t</mi><mi>z</mi></msub>
+		<mgroupalign></mgroupalign>
+		<mo>=</mo>
+		<mgroupalign></mgroupalign>
+		<mo>-</mo>
+		<mfrac>
+		    <mrow><mi>far</mi><mo>+</mo><mi>near</mi></mrow>
+		    <mrow><mi>far</mi><mo>-</mo><mi>near</mi></mrow>
+		</mfrac>
+	    </mtd></mtr>
+	</mtable></math></div><p>Typically, the matrix mode is
+	<code class="constant">GL_PROJECTION</code>, and
+	(<em class="parameter"><code>left</code></em>, <em class="parameter"><code>bottom</code></em>,
+	-<em class="parameter"><code>near</code></em>) and
+	(<em class="parameter"><code>right</code></em>, <em class="parameter"><code>top</code></em>,
+	-<em class="parameter"><code>near</code></em>)
+	specify the points on the near clipping plane that are mapped
+	to the lower left and upper right corners of the window,
+	respectively, assuming that the eye is located at (0, 0, 0).
+	-<em class="parameter"><code>far</code></em>
+	specifies the location of the far clipping plane. Both
+	<em class="parameter"><code>near</code></em> and <em class="parameter"><code>far</code></em>
+	can be either positive or negative.</p><p>Use
+	<a class="citerefentry" href="glPushMatrix"><span class="citerefentry"><span class="refentrytitle">glPushMatrix</span></span></a>
+	and
+	<a class="citerefentry" href="glPopMatrix"><span class="citerefentry"><span class="refentrytitle">glPopMatrix</span></span></a>
+	to save and restore the current matrix stack.</p></div><div class="refsect1" title="Errors"><a id="errors"></a><h2>Errors</h2><p>
+	    <code class="constant">GL_INVALID_VALUE</code> is generated if
+	    <em class="parameter"><code>left</code></em> = <em class="parameter"><code>right</code></em>, or
+	    <em class="parameter"><code>bottom</code></em> = <em class="parameter"><code>top</code></em>, or
+	    <em class="parameter"><code>near</code></em> = <em class="parameter"><code>far</code></em>.
+	</p></div><div class="refsect1" title="See Also"><a id="seealso"></a><h2>See Also</h2><p>
+	<a class="citerefentry" href="glFrustum"><span class="citerefentry"><span class="refentrytitle">glFrustum</span></span></a>,
+	<a class="citerefentry" href="glMatrixMode"><span class="citerefentry"><span class="refentrytitle">glMatrixMode</span></span></a>,
+	<a class="citerefentry" href="glMultMatrix"><span class="citerefentry"><span class="refentrytitle">glMultMatrix</span></span></a>,
+	<a class="citerefentry" href="glPushMatrix"><span class="citerefentry"><span class="refentrytitle">glPushMatrix</span></span></a>,
+	<a class="citerefentry" href="glViewport"><span class="citerefentry"><span class="refentrytitle">glViewport</span></span></a>
+	</p></div><div class="refsect1" title="Copyright"><a id="copyright"></a><h2>Copyright</h2><p>
+	    Copyright © 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div>

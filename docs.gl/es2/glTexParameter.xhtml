@@ -1,0 +1,406 @@
+<div class="refentry"><a id="glTexParameter"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>glTexParameter — set texture parameters</p></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table" style="cellspacing: 0; cellpadding: 0;"><tr><td><code class="funcdef">void <strong class="fsfunc">glTexParameterf</strong>(</code></td><td>GLenum <var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLenum <var class="pdparam">pname</var>, </td></tr><tr><td> </td><td>GLfloat <var class="pdparam">param</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div><div class="funcsynopsis"><table class="funcprototype-table" style="cellspacing: 0; cellpadding: 0;"><tr><td><code class="funcdef">void <strong class="fsfunc">glTexParameteri</strong>(</code></td><td>GLenum <var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLenum <var class="pdparam">pname</var>, </td></tr><tr><td> </td><td>GLint <var class="pdparam">param</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1"><a id="parameters"></a><h2>Parameters</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>target</code></em></span></dt><dd><p>
+                    Specifies the target texture of the active texture unit,
+                    which must be either <code class="constant">GL_TEXTURE_2D</code> or
+                    <code class="constant">GL_TEXTURE_CUBE_MAP</code>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>pname</code></em></span></dt><dd><p>
+                    Specifies the symbolic name of a single-valued texture parameter.
+                    <em class="parameter"><code>pname</code></em> can be one of the following:
+                    <code class="constant">GL_TEXTURE_MIN_FILTER</code>,
+                    <code class="constant">GL_TEXTURE_MAG_FILTER</code>,
+                    <code class="constant">GL_TEXTURE_WRAP_S</code>, or
+                    <code class="constant">GL_TEXTURE_WRAP_T</code>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>param</code></em></span></dt><dd><p>
+                    Specifies the value of <em class="parameter"><code>pname</code></em>.
+                </p></dd></dl></div></div><div class="refsynopsisdiv"><h2>C Specification</h2><div class="funcsynopsis"><table class="funcprototype-table" style="cellspacing: 0; cellpadding: 0;"><tr><td><code class="funcdef">void <strong class="fsfunc">glTexParameterfv</strong>(</code></td><td>GLenum <var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLenum <var class="pdparam">pname</var>, </td></tr><tr><td> </td><td>const GLfloat * <var class="pdparam">params</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div><div class="funcsynopsis"><table class="funcprototype-table" style="cellspacing: 0; cellpadding: 0;"><tr><td><code class="funcdef">void <strong class="fsfunc">glTexParameteriv</strong>(</code></td><td>GLenum <var class="pdparam">target</var>, </td></tr><tr><td> </td><td>GLenum <var class="pdparam">pname</var>, </td></tr><tr><td> </td><td>const GLint * <var class="pdparam">params</var><code>)</code>;</td></tr></table><div class="funcprototype-spacer"> </div></div></div><div class="refsect1"><a id="parameters2"></a><h2>Parameters</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>target</code></em></span></dt><dd><p>
+                    Specifies the target texture of the active texture unit,
+                    which must be either <code class="constant">GL_TEXTURE_2D</code> or
+                    <code class="constant">GL_TEXTURE_CUBE_MAP</code>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>pname</code></em></span></dt><dd><p>
+                    Specifies the symbolic name of a texture parameter.
+                    <em class="parameter"><code>pname</code></em> can be one of the following:
+                    <code class="constant">GL_TEXTURE_MIN_FILTER</code>,
+                    <code class="constant">GL_TEXTURE_MAG_FILTER</code>,
+                    <code class="constant">GL_TEXTURE_WRAP_S</code>, or
+                    <code class="constant">GL_TEXTURE_WRAP_T</code>.
+                </p></dd><dt><span class="term"><em class="parameter"><code>params</code></em></span></dt><dd><p>
+                    Specifies a pointer to an array where the value of
+                    <em class="parameter"><code>pname</code></em> is stored.
+                </p></dd></dl></div></div><div class="refsect1"><a id="description"></a><h2>Description</h2><p>
+            Texture mapping is a technique that applies an image onto an object's surface
+            as if the image were a decal or cellophane shrink-wrap.
+            The image is created in texture space,
+            with an
+            (<math overflow="scroll"><mi mathvariant="italic">s</mi></math>,
+            <math overflow="scroll"><mi mathvariant="italic">t</mi></math>)
+            coordinate system.
+            A texture is a two-dimensional or cube-mapped image and a set of parameters
+            that determine how samples are derived from the image.
+        </p><p>
+            <code class="function">glTexParameter</code> assigns the value or values in <em class="parameter"><code>params</code></em> to the texture parameter
+            specified as <em class="parameter"><code>pname</code></em>.
+            <em class="parameter"><code>target</code></em> defines the target texture of the active texture unit,
+            either <code class="constant">GL_TEXTURE_2D</code> or <code class="constant">GL_TEXTURE_CUBE_MAP</code>.
+            The following symbols are accepted in <em class="parameter"><code>pname</code></em>:
+        </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">GL_TEXTURE_MIN_FILTER</code></span></dt><dd><p>
+                        The texture minifying function is used whenever the pixel being textured
+                        maps to an area greater than one texture element.
+                        There are six defined minifying functions.
+                        Two of them use the nearest one or nearest four texture elements
+                        to compute the texture value.
+                        The other four use mipmaps.
+                    </p><p>
+                        A mipmap is an ordered set of arrays representing the same image
+                        at progressively lower resolutions.
+                        If the texture has dimensions
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mi mathvariant="italic">w</mi>
+                                <mo>×</mo>
+                                <mi mathvariant="italic">h</mi>
+                            </mrow>
+                        </math>,
+                        there are
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mrow>
+                                    <mi mathvariant="italic">floor</mi>
+                                    <mo>⁡</mo>
+                                    <mfenced open="(" close=")">
+                                    <mrow>
+                                        <msub><mi mathvariant="italic">log</mi>
+                                        <mn>2</mn>
+                                        </msub>
+                                        <mo>⁡</mo>
+                                        <mfenced open="(" close=")">
+                                        <mrow>
+                                            <mi mathvariant="italic">max</mi>
+                                            <mo>⁡</mo>
+                                            <mfenced open="(" close=")">
+                                                <mi mathvariant="italic">w</mi>
+                                                <mi mathvariant="italic">h</mi>
+                                            </mfenced>
+                                        </mrow>
+                                        </mfenced>
+                                    </mrow>
+                                    </mfenced>
+                                </mrow>
+                                <mo>+</mo>
+                                <mn>1</mn>
+                            </mrow>
+                        </math>
+                        mipmap levels.
+                        The first mipmap level is the original texture,
+                        with dimensions
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mi mathvariant="italic">w</mi>
+                                <mo>×</mo>
+                                <mi mathvariant="italic">h</mi>
+                            </mrow>
+                        </math>.
+                        Each subsequent mipmap level has dimensions
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mi mathvariant="italic">max</mi>
+                                <mo>⁡</mo>
+                                <mfenced open="(" close=")">
+                                    <mn>1</mn>
+                                    <mrow>
+                                        <mi mathvariant="italic">floor</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="(" close=")">
+                                            <mfrac>
+                                                <mi mathvariant="italic">w</mi>
+                                                <msup><mn>2</mn>
+                                                    <mi mathvariant="italic">i</mi>
+                                                </msup>
+                                            </mfrac>
+                                        </mfenced>
+                                    </mrow>
+                                </mfenced>
+                                <mo>×</mo>
+                                <mi mathvariant="italic">max</mi>
+                                <mo>⁡</mo>
+                                <mfenced open="(" close=")">
+                                    <mn>1</mn>
+                                    <mrow>
+                                        <mi mathvariant="italic">floor</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="(" close=")">
+                                            <mfrac>
+                                                <mi mathvariant="italic">h</mi>
+                                                <msup><mn>2</mn>
+                                                    <mi mathvariant="italic">i</mi>
+                                                </msup>
+                                            </mfrac>
+                                        </mfenced>
+                                    </mrow>
+                                </mfenced>
+                            </mrow>
+                        </math>,
+                        where
+                        <math overflow="scroll">
+
+                            <mi mathvariant="italic">i</mi>
+                        </math>
+                        is the mipmap level,
+                        until the final mipmap is reached,
+                        which has dimension
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mn>1</mn>
+                                <mo>×</mo>
+                                <mn>1</mn>
+                            </mrow>
+                        </math>.
+                    </p><p>
+                        To define the mipmap levels, call <a class="citerefentry" href="glTexImage2D"><span class="citerefentry"><span class="refentrytitle">glTexImage2D</span></span></a>,
+                        <a class="citerefentry" href="glCompressedTexImage2D"><span class="citerefentry"><span class="refentrytitle">glCompressedTexImage2D</span></span></a>,
+                        or <a class="citerefentry" href="glCopyTexImage2D"><span class="citerefentry"><span class="refentrytitle">glCopyTexImage2D</span></span></a>
+                        with the <span class="emphasis"><em>level</em></span> argument indicating the order of the mipmaps.
+                        Level 0 is the original texture;
+                        level
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mi mathvariant="italic">floor</mi>
+                                <mo>⁡</mo>
+                                <mfenced open="(" close=")">
+                                <mrow>
+                                    <msub><mi mathvariant="italic">log</mi>
+                                    <mn>2</mn>
+                                    </msub>
+                                    <mo>⁡</mo>
+                                    <mfenced open="(" close=")">
+                                    <mrow>
+                                        <mi mathvariant="italic">max</mi>
+                                        <mo>⁡</mo>
+                                        <mfenced open="(" close=")">
+                                            <mi mathvariant="italic">w</mi>
+                                            <mi mathvariant="italic">h</mi>
+                                        </mfenced>
+                                    </mrow>
+                                    </mfenced>
+                                </mrow>
+                                </mfenced>
+                            </mrow>
+                        </math>
+                        is the final
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mn>1</mn>
+                                <mo>×</mo>
+                                <mn>1</mn>
+                            </mrow>
+                        </math>
+                        mipmap.
+                    </p><p>
+                        <em class="parameter"><code>params</code></em> supplies a function for minifying the texture as one of the
+                        following:
+                        </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">GL_NEAREST</code></span></dt><dd><p>
+                                        Returns the value of the texture element that is nearest
+                                        (in Manhattan distance)
+                                        to the center of the pixel being textured.
+                                    </p></dd><dt><span class="term"><code class="constant">GL_LINEAR</code></span></dt><dd><p>
+                                        Returns the weighted average of the four texture elements
+                                        that are closest to the center of the pixel being textured.
+                                    </p></dd><dt><span class="term"><code class="constant">GL_NEAREST_MIPMAP_NEAREST</code></span></dt><dd><p>
+                                        Chooses the mipmap that most closely matches the size of the pixel
+                                        being textured and uses the <code class="constant">GL_NEAREST</code> criterion
+                                        (the texture element nearest to the center of the pixel)
+                                        to produce a texture value.
+                                    </p></dd><dt><span class="term"><code class="constant">GL_LINEAR_MIPMAP_NEAREST</code></span></dt><dd><p>
+                                        Chooses the mipmap that most closely matches the size of the pixel
+                                        being textured and uses the <code class="constant">GL_LINEAR</code> criterion
+                                        (a weighted average of the four texture elements that are closest
+                                        to the center of the pixel)
+                                        to produce a texture value.
+                                    </p></dd><dt><span class="term"><code class="constant">GL_NEAREST_MIPMAP_LINEAR</code></span></dt><dd><p>
+                                        Chooses the two mipmaps that most closely match the size of the pixel
+                                        being textured and uses the <code class="constant">GL_NEAREST</code> criterion
+                                        (the texture element nearest to the center of the pixel)
+                                        to produce a texture value from each mipmap.
+                                        The final texture value is a weighted average of those two values.
+                                    </p></dd><dt><span class="term"><code class="constant">GL_LINEAR_MIPMAP_LINEAR</code></span></dt><dd><p>
+                                        Chooses the two mipmaps that most closely match the size of the pixel
+                                        being textured and uses the <code class="constant">GL_LINEAR</code> criterion
+                                        (a weighted average of the four texture elements that are closest
+                                        to the center of the pixel)
+                                        to produce a texture value from each mipmap.
+                                        The final texture value is a weighted average of those two values.
+                                    </p></dd></dl></div><p>
+                    </p><p>
+                        As more texture elements are sampled in the minification process,
+                        fewer aliasing artifacts will be apparent.
+                        While the <code class="constant">GL_NEAREST</code> and <code class="constant">GL_LINEAR</code> minification functions can be
+                        faster than the other four,
+                        they sample only one or four texture elements to determine the texture value
+                        of the pixel being rendered and can produce moire patterns
+                        or ragged transitions.
+                        The initial value of <code class="constant">GL_TEXTURE_MIN_FILTER</code> is
+                        <code class="constant">GL_NEAREST_MIPMAP_LINEAR</code>.
+                    </p></dd><dt><span class="term"><code class="constant">GL_TEXTURE_MAG_FILTER</code></span></dt><dd><p>
+                        The texture magnification function is used when the pixel being textured
+                        maps to an area less than or equal to one texture element.
+                        It sets the texture magnification function to either <code class="constant">GL_NEAREST</code>
+                        or <code class="constant">GL_LINEAR</code> (see below). <code class="constant">GL_NEAREST</code> is generally faster
+                        than <code class="constant">GL_LINEAR</code>,
+                        but it can produce textured images with sharper edges
+                        because the transition between texture elements is not as smooth.
+                        The initial value of <code class="constant">GL_TEXTURE_MAG_FILTER</code> is <code class="constant">GL_LINEAR</code>.
+                        </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">GL_NEAREST</code></span></dt><dd><p>
+                                        Returns the value of the texture element that is nearest
+                                        (in Manhattan distance)
+                                        to the center of the pixel being textured.
+                                    </p></dd><dt><span class="term"><code class="constant">GL_LINEAR</code></span></dt><dd><p>
+                                        Returns the weighted average of the four texture elements
+                                        that are closest to the center of the pixel being textured.
+                                    </p></dd></dl></div><p>
+                        </p><p>
+                        </p><p>
+                    </p></dd></dl></div><p>
+        </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">GL_TEXTURE_WRAP_S</code></span></dt><dd><p>
+                        Sets the wrap parameter for texture coordinate
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        to either <code class="constant">GL_CLAMP_TO_EDGE</code>, <code class="constant">GL_MIRRORED_REPEAT</code>, or
+                        <code class="constant">GL_REPEAT</code>.  <code class="constant">GL_CLAMP_TO_EDGE</code> causes
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        coordinates to be clamped to the
+                        range
+                        <math overflow="scroll">
+
+                            <mfenced open="[" close="]">
+                                <mfenced open="" close="">
+                                    <mrow>
+                                        <mfrac>
+                                            <mn>1</mn>
+                                            <mrow>
+                                                <mn>2</mn><mi mathvariant="italic">N</mi>
+                                            </mrow>
+                                        </mfrac>
+                                    </mrow>
+                                </mfenced>
+                                <mrow>
+                                    <mn>1</mn>
+                                    <mo>-</mo>
+                                    <mfenced open="" close="">
+                                        <mrow>
+                                            <mfrac>
+                                                <mn>1</mn>
+                                                <mrow>
+                                                    <mn>2</mn><mi mathvariant="italic">N</mi>
+                                                </mrow>
+                                            </mfrac>
+                                        </mrow>
+                                    </mfenced>
+                                </mrow>
+                            </mfenced>
+                        </math>,
+                        where
+                        <math overflow="scroll"><mi mathvariant="italic">N</mi></math>
+                        is the size
+                        of the texture in the direction of clamping.  <code class="constant">GL_REPEAT</code> causes the
+                        integer part of the
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        coordinate to be ignored; the GL uses only the
+                        fractional part, thereby creating a repeating pattern.
+                        <code class="constant">GL_MIRRORED_REPEAT</code> causes the
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        coordinate to be set to the
+                        fractional part of the texture coordinate if the integer part of
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        is
+                        even; if the integer part of
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        is odd, then the
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>
+                        texture coordinate is
+                        set to
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mn>1</mn>
+                                <mo>-</mo>
+                                <mrow>
+                                    <mi mathvariant="italic">frac</mi>
+                                    <mo>⁡</mo>
+                                    <mfenced open="(" close=")">
+                                        <mi mathvariant="italic">s</mi>
+                                    </mfenced>
+                                </mrow>
+                            </mrow>
+                        </math>,
+                        where
+                        <math overflow="scroll">
+
+                            <mrow>
+                                <mi mathvariant="italic">frac</mi>
+                                <mo>⁡</mo>
+                                <mfenced open="(" close=")">
+                                    <mi mathvariant="italic">s</mi>
+                                </mfenced>
+                            </mrow>
+                        </math>
+                        represents the fractional part of
+                        <math overflow="scroll"><mi mathvariant="italic">s</mi></math>.
+                        Initially,
+                        <code class="constant">GL_TEXTURE_WRAP_S</code> is set to <code class="constant">GL_REPEAT</code>.
+                    </p></dd></dl></div><p>
+        </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">GL_TEXTURE_WRAP_T</code></span></dt><dd><p>
+                        Sets the wrap parameter for texture coordinate
+                        <math overflow="scroll"><mi mathvariant="italic">t</mi></math>
+                        to either <code class="constant">GL_CLAMP_TO_EDGE</code>, <code class="constant">GL_MIRRORED_REPEAT</code>, or
+                        <code class="constant">GL_REPEAT</code>.  See the discussion under <code class="constant">GL_TEXTURE_WRAP_S</code>.
+                        Initially, <code class="constant">GL_TEXTURE_WRAP_T</code> is set to <code class="constant">GL_REPEAT</code>.
+                    </p></dd></dl></div></div><div class="refsect1"><a id="notes"></a><h2>Notes</h2><p>
+            Suppose that a texture is accessed from a fragment shader or vertex shader and
+            has set <code class="constant">GL_TEXTURE_MIN_FILTER</code> to one of the functions that requires
+            mipmaps.  If either the dimensions of the texture images currently defined
+            (with previous calls to <a class="citerefentry" href="glTexImage2D"><span class="citerefentry"><span class="refentrytitle">glTexImage2D</span></span></a>,
+            <a class="citerefentry" href="glCompressedTexImage2D"><span class="citerefentry"><span class="refentrytitle">glCompressedTexImage2D</span></span></a>,
+            or <a class="citerefentry" href="glCopyTexImage2D"><span class="citerefentry"><span class="refentrytitle">glCopyTexImage2D</span></span></a>) do not
+            follow the proper sequence for mipmaps (described above), or there are
+            fewer texture images defined than are needed, or the set of texture images
+            were defined with different formats or types, then the texture image unit will return
+            (R, G, B, A) = (0, 0, 0, 1).
+        </p><p>
+            Similarly, if the width or height of a texture image are not powers of two and either the
+            <code class="constant">GL_TEXTURE_MIN_FILTER</code> is set to one of the functions that requires mipmaps
+            or the <code class="constant">GL_TEXTURE_WRAP_S</code> or <code class="constant">GL_TEXTURE_WRAP_T</code> is not
+            set to <code class="constant">GL_CLAMP_TO_EDGE</code>, then the texture image unit will return
+            (R, G, B, A) = (0, 0, 0, 1).
+        </p><p>
+            <code class="function">glTexParameter</code>
+            specifies the texture parameters for the texture bound to the active texture unit, specified
+            by calling <a class="citerefentry" href="glActiveTexture"><span class="citerefentry"><span class="refentrytitle">glActiveTexture</span></span></a>.
+        </p></div><div class="refsect1"><a id="errors"></a><h2>Errors</h2><p>
+            <code class="constant">GL_INVALID_ENUM</code> is generated if <em class="parameter"><code>target</code></em> or <em class="parameter"><code>pname</code></em> is not
+            one of the accepted defined values.
+        </p><p>
+            <code class="constant">GL_INVALID_ENUM</code> is generated if <em class="parameter"><code>params</code></em>
+            should have a defined symbolic
+            constant value (based on the value of <em class="parameter"><code>pname</code></em>) and does not.
+        </p></div><div class="refsect1"><a id="associatedgets"></a><h2>Associated Gets</h2><p>
+            <a class="citerefentry" href="glGetTexParameter"><span class="citerefentry"><span class="refentrytitle">glGetTexParameter</span></span></a>
+        </p></div>
+        {$pipelinestall}{$examples}
+        <div class="refsect1"><a id="seealso"></a><h2>See Also</h2><p>
+            <a class="citerefentry" href="glActiveTexture"><span class="citerefentry"><span class="refentrytitle">glActiveTexture</span></span></a>,
+            <a class="citerefentry" href="glBindTexture"><span class="citerefentry"><span class="refentrytitle">glBindTexture</span></span></a>,
+            <a class="citerefentry" href="glCopyTexImage2D"><span class="citerefentry"><span class="refentrytitle">glCopyTexImage2D</span></span></a>,
+            <a class="citerefentry" href="glCopyTexSubImage2D"><span class="citerefentry"><span class="refentrytitle">glCopyTexSubImage2D</span></span></a>,
+            <a class="citerefentry" href="glPixelStorei"><span class="citerefentry"><span class="refentrytitle">glPixelStorei</span></span></a>,
+            <a class="citerefentry" href="glTexImage2D"><span class="citerefentry"><span class="refentrytitle">glTexImage2D</span></span></a>,
+            <a class="citerefentry" href="glTexSubImage2D"><span class="citerefentry"><span class="refentrytitle">glTexSubImage2D</span></span></a>
+        </p></div><div class="refsect1"><div id="Copyright"><h2>Copyright</h2><p>
+            Copyright © 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <a class="ulink" href="https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/" target="_top">https://web.archive.org/web/20171022161616/http://oss.sgi.com/projects/FreeB/</a>.
+        </p></div></div></div>
