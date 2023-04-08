@@ -13,9 +13,9 @@ use xml::EventReader;
 
 use serde_json::Result as JsonResult;
 
-const STOP_WORDS_PUNCTUATION: [&str; 13] = [
-    ",", "\n", "(", ")", ".", "a", "an", "the", "and", "in", "on", "of", "to",
-];
+// const STOP_WORDS_PUNCTUATION: [&str; 13] = [
+//     ",", "\corpus_size", "(", ")", ".", "a", "an", "the", "and", "in", "on", "of", "to",
+// ];
 
 type TermFreq = HashMap<String, usize>;
 type TermFreqIndex = HashMap<PathBuf, TermFreq>;
@@ -36,9 +36,9 @@ impl<'a> Lexer<'a> {
         }
     }
 
-    fn chop(&mut self, n: usize) -> &'a [char] {
-        let token = &self.content[0..n];
-        self.content = &self.content[n..];
+    fn chop(&mut self, corpus_size: usize) -> &'a [char] {
+        let token = &self.content[0..corpus_size];
+        self.content = &self.content[corpus_size..];
         token
     }
 
@@ -46,43 +46,57 @@ impl<'a> Lexer<'a> {
     where
         P: FnMut(&char) -> bool,
     {
-        let mut n = 0;
-        while n < self.content.len() && predicate(&self.content[n]) {
-            n += 1;
+        let mut corpus_size = 0;
+        while corpus_size < self.content.len() && predicate(&self.content[corpus_size]) {
+            corpus_size += 1;
         }
-        self.chop(n)
+        self.chop(corpus_size)
     }
 
-    fn next_token(&mut self) -> Option<&'a [char]> {
+    fn next_token(&mut self) -> Option<String> {
         self.trim_left();
         if self.content.len() == 0 {
             return None;
         }
 
         if self.content[0].is_alphabetic() {
-            return Some(self.chop_while(|x| x.is_alphanumeric()));
+            return Some(
+                self.chop_while(|x| x.is_alphanumeric())
+                    .iter()
+                    .map(|x| x.to_ascii_uppercase())
+                    .collect::<String>(),
+            );
         } else if self.content[0].is_numeric() {
-            return Some(self.chop_while(|x| x.is_numeric()));
+            return Some(self.chop_while(|x| x.is_numeric()).iter().collect());
         };
 
-        Some(self.chop(1))
+        Some(self.chop(1).iter().collect())
     }
 }
 
 impl<'a> Iterator for Lexer<'a> {
-    type Item = &'a [char];
+    type Item = String;
 
     fn next(&mut self) -> Option<Self::Item> {
         self.next_token()
     }
 }
 
-fn index_document(content: &str) -> HashMap<String, usize> {
-    todo!()
+fn tf(term: &str, doc_freq: &TermFreq) -> f32 {
+    let term_freq = *doc_freq.get(term).unwrap_or(&0) as f32;
+    let tot_terms_count_in_doc = doc_freq.values().fold(0, |acc, &curr| acc + curr) as f32;
+    term_freq / tot_terms_count_in_doc
+}
+
+fn idf(term: &str, tf_index: &TermFreqIndex) -> f32 {
+    let corpus_size = tf_index.len() as f32;
+    let doc_count = (tf_index.values().filter(|tf| tf.contains_key(term)).count()).max(1) as f32;
+    //println!("doc_count:{doc_count} -> corpus {corpus_size}");
+    (corpus_size / doc_count).log10()
 }
 
 fn read_entire_xml_file(file_path: &PathBuf) -> anyhow::Result<String> {
-    println!("Processing file : {file_path:?}");
+    //println!("Processing file : {file_path:?}");
     let file = File::open(file_path)?;
     let event_reader = EventReader::new(file);
     let mut content = String::new();
@@ -100,16 +114,21 @@ fn read_entire_xml_file(file_path: &PathBuf) -> anyhow::Result<String> {
 fn main() -> ExitCode {
     match entry() {
         Ok(()) => ExitCode::SUCCESS,
-        Err(_) => ExitCode::FAILURE,
+        Err(e) => {
+            eprintln!("Program failed with error: {e}");
+            usage(&"seroost");
+            ExitCode::FAILURE
+        }
     }
 }
 
+#[allow(unused)]
 fn usage(program: &str) {
-    anyhow!("Usage: {program} [SUBCOMMAND] [OPTIONS]");
-    anyhow!("Subcommands: ");
-    anyhow!("     index   <folder>");
-    anyhow!("     search  <index-file>");
-    anyhow!("     serve   <index-file> [address]");
+    eprintln!("Usage: {program} [SUBCOMMAND] [OPTIONS]");
+    eprintln!("Subcommands: ");
+    eprintln!("     index   <folder>");
+    eprintln!("     search  <index-file>");
+    eprintln!("     serve   <index-file> [address]");
 }
 
 fn serve_404(request: Request) -> anyhow::Result<()> {
@@ -120,28 +139,50 @@ fn serve_404(request: Request) -> anyhow::Result<()> {
 
 fn serve_static_file(request: Request, file_path: &str, content_type: &str) -> anyhow::Result<()> {
     let file = File::open(file_path).map_err(|e| anyhow!("File {file_path} isn't present: {e}"))?;
-    let content_type_html = Header::from_bytes("Content-Type", content_type)
-        .map_err(|e| anyhow!("Failed while setting header {e:?}"))?;
+    let content_type_html =
+        Header::from_bytes("Content-Type", content_type).map_err(|e| anyhow!("Failed while setting header {e:?}"))?;
     let response = Response::from_file(file).with_header(content_type_html);
     request
         .respond(response)
         .map_err(|e| anyhow!("ERROR: Error in responding to request: {e}"))
 }
 
-fn serve_request(request: Request) -> anyhow::Result<()> {
+fn serve_request(tf_index: &TermFreqIndex, mut request: Request) -> anyhow::Result<()> {
     match (request.method(), request.url()) {
-        /* (Method::Get, "/api/search") => {
-            let mut content = String::new();
+        (Method::Post, "/api/search") => {
+            let mut buf = Vec::new();
             let json = request
                 .as_reader()
-                .read_to_string(&mut content)
-                .context("ERROR: Error while reading json");
-            let value = serde_json::from_reader(json);
-        } */
-        (Method::Get, "/index.js") => serve_static_file(request, "index.js", "text/javascript")?,
-        (Method::Get, "/index.html") | (Method::Get, "/") => {
-            serve_static_file(request, "index.html", "text/html")?
+                .read_to_end(&mut buf)
+                .context("ERROR: Error while reading json")?;
+
+            let query = String::from_utf8(buf).map_err(|_| anyhow!("Unable to parse content"))?;
+            let query = query.chars().collect::<Vec<_>>();
+
+            let mut result: Vec<(&Path, f32)> = Vec::new();
+            for (path, doc_freq) in tf_index {
+                let mut rank = 0.0;
+                for term in Lexer::new(&query) {
+                    let tf = tf(&term, doc_freq);
+                    let idf = idf(&term, tf_index);
+                    rank += tf * idf;
+                }
+
+                result.push((path, rank));
+            }
+            result.sort_by(|(_, rank1), (_, rank2)| rank2.partial_cmp(&rank1).unwrap());
+
+            for (path, rank) in result.iter().take(10) {
+                println!("In document: {path:100?} => Rank    : {rank:0.4}");
+            }
+
+            request
+                .respond(Response::from_string("ok"))
+                .map_err(|_| anyhow!("Error while responding to request"))?
+            //let value = serde_json::from_reader(json);
         }
+        (Method::Get, "/index.js") => serve_static_file(request, "index.js", "text/javascript")?,
+        (Method::Get, "/index.html") | (Method::Get, "/") => serve_static_file(request, "index.html", "text/html")?,
         _ => serve_404(request)?,
     }
 
@@ -173,32 +214,33 @@ fn entry() -> anyhow::Result<()> {
                 .ok_or_else(|| usage(&program))
                 .map_err(|_| anyhow!("Error while converting args to index path"))?;
 
-            let index_file = File::open(&index_path)
-                .map_err(|e| anyhow!("Provided index file : {index_path} not found: {e}"))?;
+            let index_file =
+                File::open(&index_path).map_err(|e| anyhow!("Provided index file : {index_path} not found: {e}"))?;
 
             let tf_index: TermFreqIndex = serde_json::from_reader(index_file)
                 .map_err(|e| anyhow!("Unable to load index from file: {index_path}: {e}"))?;
-            println!(
-                "{index_path} contains {count} files",
-                count = tf_index.len()
-            );
+            println!("{index_path} contains {count} files", count = tf_index.len());
         }
         "serve" => {
+            let index_path = args.next().ok_or_else(|| anyhow!("No index file present"))?;
+            let index_file = File::open(&index_path).map_err(|e| anyhow!("Index file now found {e}"))?;
+            let tf_index: TermFreqIndex =
+                serde_json::from_reader(index_file).map_err(|e| anyhow!("unable to read index file {e}"))?;
+
             let address = args.next().unwrap_or("127.0.0.1:6969".into());
-            let server = Server::http(&address)
-                .map_err(|e| anyhow!("ERROR: Unable to bind to the address :{address}"))?;
+            let server =
+                Server::http(&address).map_err(|e| anyhow!("ERROR: Unable to bind to the address :{address}"))?;
 
             println!("Listening at address: {address}");
 
             for request in server.incoming_requests() {
                 println!(
-                    "INFO: Received request! method: {:?}, url: {:?}, headers: {:?}",
+                    "INFO: Received request - method : {:?}, url: {:?}",
                     request.method(),
                     request.url(),
-                    request.headers()
                 );
 
-                serve_request(request)?;
+                serve_request(&tf_index, request)?;
             }
         }
 
@@ -209,20 +251,19 @@ fn entry() -> anyhow::Result<()> {
 }
 
 fn index_folder(dir_path: &Path, tf_index: &mut TermFreqIndex) -> anyhow::Result<()> {
-    let dir = fs::read_dir(dir_path)
-        .map_err(|e| anyhow!("ERROR: Could not open source directory: {e:?}"))?;
+    let dir = fs::read_dir(dir_path).map_err(|e| anyhow!("ERROR: Could not open source directory: {e:?}"))?;
 
     for file_entry in dir {
-        let file = file_entry
-            .map_err(|e| anyhow!("ERROR: Unable to read next file in {dir_path:?}: {e}"))?;
+        let file = file_entry.map_err(|e| anyhow!("ERROR: Unable to read next file in {dir_path:?}: {e}"))?;
 
         let file_path = file.path();
 
-        let file_type = file.file_type().map_err(|e| {
-            anyhow!("Unable to determine the file type with path {file_path:?}: {e}")
-        })?;
+        let file_type = file
+            .file_type()
+            .map_err(|e| anyhow!("Unable to determine the file type with path {file_path:?}: {e}"))?;
 
         if file_type.is_dir() {
+            println!("File type is dir ");
             index_folder(&file_path, tf_index)?;
             continue;
         }
@@ -239,11 +280,7 @@ fn index_folder(dir_path: &Path, tf_index: &mut TermFreqIndex) -> anyhow::Result
 
         let mut tf = TermFreq::new();
 
-        for token in Lexer::new(&content) {
-            let term = token
-                .iter()
-                .map(|x| x.to_ascii_uppercase())
-                .collect::<String>();
+        for term in Lexer::new(&content) {
             if let Some(count) = tf.get_mut(&term) {
                 *count += 1
             } else {
@@ -255,10 +292,8 @@ fn index_folder(dir_path: &Path, tf_index: &mut TermFreqIndex) -> anyhow::Result
         stats.sort_by_key(|(_, f)| *f);
         stats.reverse();
 
+        println!("{file_path:?} has {count} terms ", count = tf.len());
         tf_index.insert(file_path, tf);
-        for (path, tf) in tf_index.iter() {
-            println!("{path:?} has {count} terms ", count = tf.len());
-        }
     }
 
     Ok(())
@@ -267,11 +302,9 @@ fn index_folder(dir_path: &Path, tf_index: &mut TermFreqIndex) -> anyhow::Result
 fn save_index_to_file(tf_index: &TermFreqIndex, index_path: &str) -> anyhow::Result<()> {
     println!("Writing index to file ...{index_path}");
 
-    let index_file = File::create(index_path)
-        .map_err(|e| anyhow!("Index file {index_path} could not be created"))?;
+    let index_file = File::create(index_path).map_err(|e| anyhow!("Index file {index_path} could not be created"))?;
 
-    serde_json::to_writer(index_file, &tf_index)
-        .context("Threw an error while writing index to file")?;
+    serde_json::to_writer(index_file, &tf_index).context("Threw an error while writing index to file")?;
     println!("Written index to file {index_path}");
 
     Ok(())
