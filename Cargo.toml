@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 serde_json = "1.0.95"
 xml-rs = "0.8.4"
+tiny_http = "0.11"
+anyhow = "1.0.70"
