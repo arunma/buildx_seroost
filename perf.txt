@@ -1,0 +1,45 @@
+Streaming, Debug, Index
+-----------------------
+14.15s user 
+10.45s system 
+99% cpu 
+24.601 total
+
+
+Streaming, Release, Index 
+-------------------------
+./target/release/buildx_seroost index docs.gl  
+7.55s user 
+10.20s system 
+99% cpu 
+17.755 total
+
+
+
+Buffered, Debug, Index
+-----------------------
+9.66s user 
+0.04s system 
+99% cpu 
+9.702 total
+
+
+Buffered, Release, Index
+-----------------------
+  1.57s user 
+  0.03s system 
+  99% cpu 
+  1.602 total
+
+
+  ===> search <===
+
+search string: "glsl linearly interpolate"
+
+Build, Serve
+-------------
+2.56 s
+
+Release, Serve
+--------------
+350 ms
