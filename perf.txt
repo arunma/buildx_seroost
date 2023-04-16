@@ -26,20 +26,30 @@ Buffered, Debug, Index
 
 Buffered, Release, Index
 -----------------------
-  1.57s user 
-  0.03s system 
-  99% cpu 
-  1.602 total
+1.57s user 
+0.03s system 
+99% cpu 
+1.602 total
 
 
   ===> search <===
 
 search string: "glsl linearly interpolate"
 
-Build, Serve
+Build, No DF cached, Serve
 -------------
 2.56 s
 
-Release, Serve
+Release, No DF cached, Serve
 --------------
 350 ms
+
+---------------------------------
+
+Build, DF cached, Serve
+-------------
+56 ms
+
+Release, DF cached, Serve
+--------------
+16 ms

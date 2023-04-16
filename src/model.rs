@@ -1,24 +1,26 @@
 use std::collections::HashMap;
-use std::fs::{self, File};
+use std::fs::File;
 use std::io::BufReader;
 use std::path::{Path, PathBuf};
-use std::process::ExitCode;
-use std::{env, io};
 
-use anyhow::{anyhow, Context};
-use tiny_http::{Header, Method, Request, Response, Server, StatusCode};
+use serde::{Deserialize, Serialize};
 use xml;
 use xml::reader::XmlEvent;
 use xml::EventReader;
-
-use serde_json::Result as JsonResult;
 
 // const STOP_WORDS_PUNCTUATION: [&str; 13] = [
 //     ",", "\corpus_size", "(", ")", ".", "a", "an", "the", "and", "in", "on", "of", "to",
 // ];
 
 pub type TermFreq = HashMap<String, usize>;
-pub type TermFreqIndex = HashMap<PathBuf, TermFreq>;
+pub type TermFreqPerDoc = HashMap<PathBuf, TermFreq>;
+pub type DocFreq = HashMap<String, usize>;
+
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub struct Model {
+    pub df: DocFreq,
+    pub tfpd: TermFreqPerDoc,
+}
 
 #[derive(Debug)]
 pub struct Lexer<'a> {
@@ -88,14 +90,15 @@ pub fn tf(term: &str, doc_freq: &TermFreq) -> f32 {
     term_freq / tot_terms_count_in_doc
 }
 
-pub fn idf(term: &str, tf_index: &TermFreqIndex) -> f32 {
-    let corpus_size = tf_index.len() as f32;
-    let doc_count = (tf_index.values().filter(|tf| tf.contains_key(term)).count()).max(1) as f32;
+pub fn idf(term: &str, n: usize, df: &DocFreq) -> f32 {
+    let corpus_size = n as f32;
+    //let doc_count = (tf_index.values().filter(|tf| tf.contains_key(term)).count()).max(1) as f32;
+    let doc_count = *df.get(term).unwrap_or(&1) as f32;
     //println!("doc_count:{doc_count} -> corpus {corpus_size}");
     (corpus_size / doc_count).log10()
 }
 
-pub fn read_entire_xml_file(file_path: &PathBuf) -> anyhow::Result<String> {
+pub fn parse_xml_file(file_path: &PathBuf) -> anyhow::Result<String> {
     //println!("Processing file : {file_path:?}");
     let file = BufReader::new(File::open(file_path)?);
     let event_reader = EventReader::new(file);
@@ -111,15 +114,16 @@ pub fn read_entire_xml_file(file_path: &PathBuf) -> anyhow::Result<String> {
     Ok(content)
 }
 
-pub fn search_query<'a>(tf_index: &'a TermFreqIndex, query: String) -> Vec<(&'a Path, f32)> {
+pub fn search_query<'a>(model: &'a Model, query: String) -> Vec<(&'a Path, f32)> {
     let query = query.chars().collect::<Vec<_>>();
 
     let mut result: Vec<(&Path, f32)> = Vec::new();
-    for (path, doc_freq) in tf_index {
+    let num_docs = model.tfpd.len();
+    for (path, doc_freq) in &model.tfpd {
         let mut rank = 0.0;
         for term in Lexer::new(&query) {
             let tf = tf(&term, doc_freq);
-            let idf = idf(&term, tf_index);
+            let idf = idf(&term, num_docs, &model.df);
             rank += tf * idf;
         }
 
